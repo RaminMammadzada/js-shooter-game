@@ -1,5 +1,8 @@
 import Phaser from 'phaser';
 import Bar from '../classes/comps/bar';
+import button1 from '../../images/ui/buttons/2/1.png';
+import button2 from '../../images/ui/buttons/2/5.png';
+
 
 class SceneLoad extends Phaser.Scene {
   constructor() {
@@ -22,16 +25,8 @@ class SceneLoad extends Phaser.Scene {
     this.load.on('progress', this.onProgress, this);
 
     // load our images or sounds
-    this.load.image('face", "images/face.pn');
-    this.load.image('button1", "images/ui/buttons/2/1.pn');
-    this.load.image('button2", "images/ui/buttons/2/5.png');
-    // this.load.aud'o("cat", ["audio/meow.mp3", "audio/meow.ogg"])
-    // this.load.aud'o("backgroundMusic", ["audio/background.mp3", "audio/background.ogg"])
-    this.load.image('toggleBack", "images/ui/toggles/1.png');
-    this.load.image('sfxOff", "images/ui/icons/sfx_off.png');
-    this.load.image('sfxOn", "images/ui/icons/sfx_on.png');
-    this.load.image('musicOn", "images/ui/icons/music_on.png');
-    this.load.image('musicOff", "images/ui/icons/music_off.png');
+    // this.load.image('button1', button1);
+    // this.load.image('button2', button2);
   }
 
   onProgress(value) {

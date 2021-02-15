@@ -62,22 +62,22 @@ module.exports = {
         test: /\.wav$/,
         loader: 'file-loader',
         options: {
-          name: '[path][name].[ext]'
-        }
-      }
+          name: '[path][name].[ext]',
+        },
+      },
     ],
   },
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
-    port: 8079,
+    port: 8078,
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
       'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
     },
     allowedHosts: [
-      'localhost:8079',
+      'localhost:8078',
       'labs.phaser.io',
     ],
   },

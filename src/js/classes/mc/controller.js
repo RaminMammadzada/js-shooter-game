@@ -1,12 +1,13 @@
 import Emitter from '../util/emitter';
-import Model from '../mc/model'
+import Model from '../mc/model';
+import Constants from '../../constants';
 
 class Controller {
   constructor() {
-    Emitter.on(G.SET_SCORE, this.setScore);
-    Emitter.on(G.UP_POINTS, this.upPoints);
-    Emitter.on(G.TOGGLE_SOUND, this.toggleSound);
-    Emitter.on(G.TOGGLE_MUSIC, this.toggleMusic);
+    Emitter.on(Constants.SET_SCORE, this.setScore);
+    Emitter.on(Constants.UP_POINTS, this.upPoints);
+    Emitter.on(Constants.TOGGLE_SOUND, this.toggleSound);
+    Emitter.on(Constants.TOGGLE_MUSIC, this.toggleMusic);
   }
 
   toggleSound(val) {
@@ -27,3 +28,5 @@ class Controller {
     Model.score = score;
   }
 }
+
+export default (new Controller());

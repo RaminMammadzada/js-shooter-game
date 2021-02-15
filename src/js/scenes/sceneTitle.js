@@ -1,19 +1,37 @@
 import Phaser from 'phaser';
+import button1 from '../../images/ui/buttons/2/1.png';
+import title from '../../images/title.png';
+import Emitter from '../classes/util/emitter';
+import Align from '../classes/util/align';
+import AlignGrid from '../classes/util/alignGrid';
 
 class SceneTitle extends Phaser.Scene {
   constructor() {
     super('SceneTitle');
   }
-  preload() {
 
+  preload() {
+    this.load.image('button1', button1);
+    this.load.image('title', title);
   }
+
   create() {
 
+    this.alignGrid = new AlignGrid({ rows: 11, cols: 11, scene: this, game: this.game });
+    this.alignGrid.showNumbers();
+
+    const title = this.add.image(0, 0, 'title');
+    Align.scaleToGameW(title, 0.8, this.game);
+    this.alignGrid.placeAtIndex(38, title);
+
+    Emitter.on('start_game', this.startGame, this);
   }
+
   startGame() {
     this.scene.start('SceneMain');
   }
+
   update() { }
 }
 
-export default SceneTitle
+export default SceneTitle;
