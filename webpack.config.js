@@ -7,7 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
 
   // Path to your entry point. From this file Webpack will begin his work
-  entry: './public/src/javascript/index.js',
+  entry: './src/js/index.js',
 
   // Path and filename of your result bundle.
   // Webpack will bundle all JavaScript into this file
@@ -70,14 +70,14 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
-    port: 8083,
+    port: 8079,
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
       'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
     },
     allowedHosts: [
-      'localhost:8083',
+      'localhost:8079',
       'labs.phaser.io',
     ],
   },

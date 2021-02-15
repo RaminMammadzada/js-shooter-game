@@ -1,13 +1,12 @@
 import Phaser from 'phaser';
-import SceneLoad from '../../src/js/scenes/SceneLoad';
-import SceneTitle from '../../src/js/scenes/SceneTitle';
-import SceneMain from '../../src/js/scenes/SceneMain';
-import SceneOver from '../../src/js/scenes/SceneOver';
-import Model from '../../src/js/classes/mc/model';
+import SceneLoad from './scenes/SceneLoad';
+import SceneTitle from './scenes/SceneTitle';
+import SceneMain from './scenes/SceneMain';
+import SceneOver from './scenes/SceneOver';
+import Model from './classes/mc/model';
 
-const model = new Model();
 let isMobile = navigator.userAgent.indexOf('Mobile');
-model.isMobile = isMobile;
+Model.isMobile = isMobile;
 let config;
 if (isMobile === -1) {
   isMobile = navigator.userAgent.indexOf('Tablet');

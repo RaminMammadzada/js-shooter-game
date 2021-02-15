@@ -1,3 +1,5 @@
+import Phaser from 'phaser';
+
 class SceneMain extends Phaser.Scene {
   constructor() {
     super('SceneMain');
@@ -17,3 +19,5 @@ class SceneMain extends Phaser.Scene {
     // constant running loop
   }
 }
+
+export default SceneMain;

@@ -1,3 +1,5 @@
+import Phaser from 'phaser';
+
 class SceneTitle extends Phaser.Scene {
   constructor() {
     super('SceneTitle');
@@ -13,3 +15,5 @@ class SceneTitle extends Phaser.Scene {
   }
   update() { }
 }
+
+export default SceneTitle

@@ -1,3 +1,5 @@
+import Phaser from 'phaser';
+
 class SceneOver extends Phaser.Scene {
   constructor() {
     super('SceneOver');
@@ -10,3 +12,5 @@ class SceneOver extends Phaser.Scene {
   }
   update() { }
 }
+
+export default SceneOver;
