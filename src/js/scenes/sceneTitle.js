@@ -1,10 +1,11 @@
 import Phaser from 'phaser';
 import button1 from '../../images/ui/buttons/2/1.png';
 import title from '../../images/title.png';
-import Emitter from '../classes/util/emitter';
+import EventEmitter from '../classes/util/eventEmitter';
 import Align from '../classes/util/align';
 import AlignGrid from '../classes/util/alignGrid';
 import FlatButton from '../classes/ui/flatButton';
+import Controller from '../classes/mc/controller';
 
 class SceneTitle extends Phaser.Scene {
   constructor() {
@@ -17,7 +18,7 @@ class SceneTitle extends Phaser.Scene {
   }
 
   create() {
-
+    Controller.setEmitters();
     this.alignGrid = new AlignGrid({ rows: 11, cols: 11, scene: this, game: this.game });
     this.alignGrid.showNumbers();
 
@@ -33,7 +34,7 @@ class SceneTitle extends Phaser.Scene {
     });
     this.alignGrid.placeAtIndex(93, btnStart);
 
-    Emitter.on('start_game', this.startGame, this);
+    EventEmitter.on('start_game', this.startGame, this);
   }
 
   startGame() {

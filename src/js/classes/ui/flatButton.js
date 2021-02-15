@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import Emitter from '../util/emitter';
+import EventEmitter from '../util/eventEmitter';
 import Model from '../mc/model';
 
 class FlatButton extends Phaser.GameObjects.Container {
@@ -59,9 +59,9 @@ class FlatButton extends Phaser.GameObjects.Container {
 
   pressed() {
     if (this.config.params) {
-      Emitter.emit(this.config.event, this.config.params);
+      EventEmitter.emit(this.config.event, this.config.params);
     } else {
-      Emitter.emit(this.config.event);
+      EventEmitter.emit(this.config.event);
     }
   }
 }

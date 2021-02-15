@@ -1,4 +1,4 @@
-import Emitter from '../util/emitter';
+import EventEmitter from '../util/eventEmitter';
 import Constants from '../../constants';
 
 class Model {
@@ -10,7 +10,7 @@ class Model {
 
   set musicOn(val) {
     this._musicOn = val;
-    Emitter.emit(Constants.MUSIC_CHANGED);
+    EventEmitter.emit(Constants.MUSIC_CHANGED);
   }
 
   get musicOn() {
@@ -20,7 +20,7 @@ class Model {
   set score(val) {
     this._score = val;
     console.log("Score upadted!");
-    Emitter.emit(Constants.SCORE_UPDATED);
+    EventEmitter.emit(Constants.SCORE_UPDATED);
   }
 
   get score() {

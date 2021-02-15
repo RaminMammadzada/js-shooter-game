@@ -1,13 +1,17 @@
 class Constants {
-  constructor() {
-    this.SET_SCORE = 'setScore';
-    this.UP_POINTS = 'upPoints';
-    this.SCORE_UPDATED = 'scoreUpdated';
-    this.PLAY_SOUND = 'playSound';
-    this.MUSIC_CHANGED = 'musicChanged';
-    this.TOGGLE_SOUND = 'toggleSound';
-    this.TOGGLE_MUSIC = 'toggleMusic';
-  }
+  static get SET_SCORE() { return 'setScore'; }
+
+  static get UP_POINTS() { return 'upPoints'; }
+
+  static get SCORE_UPDATED() { return 'scoreUpdated'; }
+
+  static get PLAY_SOUND() { return 'playSound'; }
+
+  static get MUSIC_CHANGED() { return 'musicChanged'; }
+
+  static get TOGGLE_SOUND() { return 'toggleSound'; }
+
+  static get TOGGLE_MUSIC() { return 'toggleMusic'; }
 }
 
 export default Constants;

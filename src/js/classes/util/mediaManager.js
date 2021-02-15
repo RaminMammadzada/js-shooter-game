@@ -1,18 +1,19 @@
 import Model from '../mc/model';
-import Emitter from './emitter';
+import EventEmitter from './eventEmitter';
 import Constants from '../../constants';
 
 class MediaManager {
   constructor(config) {
     this.scene = config.scene;
 
-    Emitter.on(Constants.PLAY_SOUND, this.playSound, this);
-    Emitter.on(Constants.MUSIC_CHANGED, this.musicChanged, this);
+    EventEmitter.on(Constants.PLAY_SOUND, this.playSound, this);
+    EventEmitter.on(Constants.MUSIC_CHANGED, this.musicChanged, this);
   }
 
   musicChanged() {
     if (this.background) {
       if (Model.musicOn === false) {
+
         this.background.stop();
       } else {
         this.background.play();

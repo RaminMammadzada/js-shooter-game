@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import Align from '../util/align';
-import Emitter from '../util/emitter';
+import EventEmitter from '../util/eventEmitter';
 
 class ToggleButton extends Phaser.GameObjects.Container {
   constructor(config) {
@@ -47,7 +47,7 @@ class ToggleButton extends Phaser.GameObjects.Container {
     this.value = !this.value;
     this.setIcons();
     if (this.event) {
-      Emitter.emit(this.event, this.value);
+      EventEmitter.emit(this.event, this.value);
     }
   }
 

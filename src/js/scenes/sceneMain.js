@@ -1,7 +1,8 @@
 import Phaser from 'phaser';
-import Emitter from '../classes/util/emitter';
+import EventEmitter from '../classes/util/eventEmitter';
 import MediaManager from '../classes/util/mediaManager';
 import SoundButtons from '../classes/ui/soundButtons';
+import Controller from '../classes/mc/controller';
 
 class SceneMain extends Phaser.Scene {
   constructor() {
@@ -15,7 +16,7 @@ class SceneMain extends Phaser.Scene {
     // define our object
     // define our object
 
-    // controller = new Controller();
+    Controller.setEmitters();
     console.log(this);
     const mediaManager = new MediaManager({ scene: this });
 

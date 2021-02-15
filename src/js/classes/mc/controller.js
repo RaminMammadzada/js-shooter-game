@@ -1,13 +1,13 @@
-import Emitter from '../util/emitter';
-import Model from '../mc/model';
+import EventEmitter from '../util/eventEmitter';
+import Model from './model';
 import Constants from '../../constants';
 
 class Controller {
-  constructor() {
-    Emitter.on(Constants.SET_SCORE, this.setScore);
-    Emitter.on(Constants.UP_POINTS, this.upPoints);
-    Emitter.on(Constants.TOGGLE_SOUND, this.toggleSound);
-    Emitter.on(Constants.TOGGLE_MUSIC, this.toggleMusic);
+  setEmitters() {
+    EventEmitter.on(Constants.SET_SCORE, this.setScore);
+    EventEmitter.on(Constants.UP_POINTS, this.upPoints);
+    EventEmitter.on(Constants.TOGGLE_SOUND, this.toggleSound);
+    EventEmitter.on(Constants.TOGGLE_MUSIC, this.toggleMusic);
   }
 
   toggleSound(val) {
@@ -23,7 +23,7 @@ class Controller {
   }
 
   upPoints(points) {
-    let score = Model.score;
+    let { score } = Model;
     score += points;
     Model.score = score;
   }
