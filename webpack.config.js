@@ -59,7 +59,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.wav$/,
+        test: /\.(wav|mp3|ogg)$/,
         loader: 'file-loader',
         options: {
           name: '[path][name].[ext]',
