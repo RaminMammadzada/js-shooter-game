@@ -1,4 +1,5 @@
 import Emitter from '../util/emitter';
+import Constants from '../../constants';
 
 class Model {
   constructor() {
@@ -9,7 +10,7 @@ class Model {
 
   set musicOn(val) {
     this._musicOn = val;
-    Emitter.emit(G.MUSIC_CHANGED);
+    Emitter.emit(Constants.MUSIC_CHANGED);
   }
 
   get musicOn() {
@@ -19,7 +20,7 @@ class Model {
   set score(val) {
     this._score = val;
     console.log("Score upadted!");
-    Emitter.emit(G.SCORE_UPDATED);
+    Emitter.emit(Constants.SCORE_UPDATED);
   }
 
   get score() {

@@ -4,6 +4,7 @@ import title from '../../images/title.png';
 import Emitter from '../classes/util/emitter';
 import Align from '../classes/util/align';
 import AlignGrid from '../classes/util/alignGrid';
+import FlatButton from '../classes/ui/flatButton';
 
 class SceneTitle extends Phaser.Scene {
   constructor() {
@@ -23,6 +24,9 @@ class SceneTitle extends Phaser.Scene {
     const title = this.add.image(0, 0, 'title');
     Align.scaleToGameW(title, 0.8, this.game);
     this.alignGrid.placeAtIndex(38, title);
+
+    const btnStart = new FlatButton({ scene: this, key: 'button1', text: 'start', event: 'start_game' })
+    this.alignGrid.placeAtIndex(93, btnStart);
 
     Emitter.on('start_game', this.startGame, this);
   }
