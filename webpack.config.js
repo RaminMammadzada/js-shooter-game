@@ -58,6 +58,13 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.wav$/,
+        loader: 'file-loader',
+        options: {
+          name: '[path][name].[ext]'
+        }
+      }
     ],
   },
   devServer: {
