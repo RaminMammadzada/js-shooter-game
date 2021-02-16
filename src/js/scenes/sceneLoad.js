@@ -6,6 +6,7 @@ import musicOn from '../../images/ui/icons/music_on.png';
 import musicOff from '../../images/ui/icons/music_off.png';
 import player from '../../images/player.png';
 import backgroundImage from '../../images/background.jpg';
+import rocks from '../../images/rocks.png';
 import Bar from '../classes/comps/bar';
 // import button1 from '../../images/ui/buttons/2/1.png';
 // import button2 from '../../images/ui/buttons/2/5.png';
@@ -50,6 +51,8 @@ class SceneLoad extends Phaser.Scene {
 
     this.load.image('ship', player);
     this.load.image('background', backgroundImage);
+
+    this.load.spritesheet('rocks', rocks, { frameWidth: 125, frameHeight: 100 });
   }
 
   onProgress(value) {
