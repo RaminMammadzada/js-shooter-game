@@ -36,6 +36,8 @@ class SceneMain extends Phaser.Scene {
     this.background.setOrigin(0, 0);
     this.playerShip = this.physics.add.sprite(this.centerX, this.centerY, 'ship');
     Align.scaleToGameW(this.playerShip, 0.125, this.game);
+    this.playerShip.body.collideWorldBounds = true;
+
 
     // this.background.scaleX = this.playerShip.scaleX;
     // this.background.scaleY = this.playerShip.scaleY;
@@ -89,6 +91,7 @@ class SceneMain extends Phaser.Scene {
 
     this.enemyShip = this.physics.add.sprite(this.centerX, 0, 'enemyShip');
     Align.scaleToGameW(this.enemyShip, 0.25, this.game);
+    this.enemyShip.body.collideWorldBounds = true;
 
     this.showInfo();
     this.setColliders();
@@ -120,6 +123,10 @@ class SceneMain extends Phaser.Scene {
     explosion.play('boom');
     console.log('player gives damage to enemy ship');
     playerBullet.destroy();
+
+    let angleForEnemyShip = this.physics.moveTo(this.enemyShip, this.playerShip.x, this.playerShip.y, 120);
+    angleForEnemyShip = this.toDegrees(angleForEnemyShip);
+    this.enemyShip.angle = angleForEnemyShip;
   }
 
   damagePlayerShip(playerShip, enemyBullet) {
@@ -150,14 +157,17 @@ class SceneMain extends Phaser.Scene {
       angle = this.toDegrees(angle);
       this.playerShip.angle = angle;
       console.log(this.playerShip.angle);
+
+      const distanceX2 = Math.abs(this.playerShip.x - this.tx);
+      const distanceY2 = Math.abs(this.playerShip.y - this.tx);
+      if (distanceX2 < this.game.config.width / 3 && distanceY2 < this.game.config.height / 3) {
+        let angleForEnemyShip = this.physics.moveTo(this.enemyShip, this.playerShip.x, this.playerShip.y, 60);
+        angleForEnemyShip = this.toDegrees(angleForEnemyShip);
+        this.enemyShip.angle = angleForEnemyShip;
+      }
     } else {
       this.fireBulletForPlayerShip();
     }
-
-    let angleForEnemyShip = this.physics.moveTo(this.enemyShip, this.playerShip.x, this.playerShip.y, 60);
-    angleForEnemyShip = this.toDegrees(angleForEnemyShip);
-    this.enemyShip.angle = angleForEnemyShip;
-
   }
 
   fireBulletForPlayerShip() {
