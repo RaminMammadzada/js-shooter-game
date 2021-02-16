@@ -19,7 +19,7 @@ class SceneTitle extends Phaser.Scene {
 
   create() {
     Controller.setEmitters();
-    this.alignGrid = new AlignGrid({ rows: 11, cols: 11, scene: this, game: this.game });
+    this.alignGrid = new AlignGrid({ rows: 11, cols: 11, scene: this });
     this.alignGrid.showNumbers();
 
     const title = this.add.image(0, 0, 'title');

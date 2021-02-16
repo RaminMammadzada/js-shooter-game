@@ -4,6 +4,7 @@ import MediaManager from '../classes/util/mediaManager';
 import SoundButtons from '../classes/ui/soundButtons';
 import Controller from '../classes/mc/controller';
 import Align from '../classes/util/align';
+import AlignGrid from '../classes/util/alignGrid';
 import Constants from '../constants';
 
 class SceneMain extends Phaser.Scene {
@@ -90,6 +91,7 @@ class SceneMain extends Phaser.Scene {
     this.enemyShip = this.physics.add.sprite(this.centerX, 0, 'enemyShip');
     Align.scaleToGameW(this.enemyShip, 0.25, this.game);
 
+    this.showInfo();
   }
 
   updateFrameNames(frameNames) {
@@ -164,6 +166,29 @@ class SceneMain extends Phaser.Scene {
     const tx = Math.cos(rads);
     const ty = Math.sin(rads);
     return { tx, ty };
+  }
+
+  showInfo() {
+    this.text1 = this.add.text(0, 0, 'Player power\n100', { fontSize: this.game.config.width / 40, align: 'center', backgroundColor: '#210EC9' });
+    this.text2 = this.add.text(0, 0, 'Enemy power\n100', { fontSize: this.game.config.width / 40, align: 'center', backgroundColor: '#210EC9' });
+
+    this.text1.setOrigin(0.5, 0.5);
+    this.text2.setOrigin(0.5, 0.5);
+    this.uiGrid = new AlignGrid({ scene: this, rows: 11, cols: 11 });
+    this.uiGrid.showNumbers();
+
+    this.uiGrid.placeAtIndex(3, this.text1);
+    this.uiGrid.placeAtIndex(9, this.text2);
+
+    this.icon1 = this.add.image(0, 0, 'ship');
+    this.icon2 = this.add.image(0, 0, 'enemyShip');
+    Align.scaleToGameW(this.icon1, 0.05, this.game);
+    Align.scaleToGameW(this.icon2, 0.05, this.game);
+    this.uiGrid.placeAtIndex(1, this.icon1);
+    this.uiGrid.placeAtIndex(7, this.icon2);
+    this.icon2.angle = 270;
+    this.icon1.angle = 270;
+
   }
 
   update() {

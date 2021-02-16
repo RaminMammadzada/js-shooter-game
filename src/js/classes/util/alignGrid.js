@@ -11,10 +11,10 @@ class AlignGrid {
       config.cols = 5;
     }
     if (!config.height) {
-      config.height = config.game.config.height;
+      config.height = config.scene.game.config.height;
     }
     if (!config.width) {
-      config.width = config.game.config.width;
+      config.width = config.scene.game.config.width;
     }
 
     this.scene = config.scene;
