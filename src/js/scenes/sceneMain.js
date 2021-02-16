@@ -34,18 +34,18 @@ class SceneMain extends Phaser.Scene {
 
     this.background = this.add.image(0, 0, 'background');
     this.background.setOrigin(0, 0);
-    this.ship = this.physics.add.sprite(this.centerX, this.centerY, 'ship');
-    Align.scaleToGameW(this.ship, 0.125, this.game);
+    this.playerShip = this.physics.add.sprite(this.centerX, this.centerY, 'ship');
+    Align.scaleToGameW(this.playerShip, 0.125, this.game);
 
-    // this.background.scaleX = this.ship.scaleX;
-    // this.background.scaleY = this.ship.scaleY;
+    // this.background.scaleX = this.playerShip.scaleX;
+    // this.background.scaleY = this.playerShip.scaleY;
     this.background.setInteractive();
     this.background.on('pointerup', this.backgroundClicked, this);
     this.background.on('pointerdown', this.onDown, this);
     this.physics.world.setBounds(0, 0, this.background.displayWidth, this.background.displayHeight);
 
     this.cameras.main.setBounds(0, 0, this.background.displayWidth, this.background.displayHeight);
-    this.cameras.main.startFollow(this.ship, true);
+    this.cameras.main.startFollow(this.playerShip, true);
     this.rockGroup = this.physics.add.group({
       key: 'rocks',
       frame: [0, 1, 2],
@@ -55,7 +55,8 @@ class SceneMain extends Phaser.Scene {
       angularVelocity: 1,
       collideWorldBounds: true,
     });
-    this.bulletGroup = this.physics.add.group();
+    this.playerBulletGroup = this.physics.add.group();
+    this.enemyBulletGroup = this.physics.add.group();
     this.rockGroup.children.iterate((child) => {
       const xx = Math.floor(Math.random() * this.background.displayWidth);
       const yy = Math.floor(Math.random() * this.background.displayHeight);
@@ -77,9 +78,6 @@ class SceneMain extends Phaser.Scene {
       child.body.setVelocity(vx * speed, vy * speed);
     });
 
-    this.physics.add.collider(this.rockGroup);
-    this.physics.add.collider(this.bulletGroup, this.rockGroup, this.destroyRock, null, this);
-
     const frameNames = this.anims.generateFrameNumbers('exp');
 
     this.anims.create({
@@ -93,6 +91,15 @@ class SceneMain extends Phaser.Scene {
     Align.scaleToGameW(this.enemyShip, 0.25, this.game);
 
     this.showInfo();
+    this.setColliders();
+  }
+
+  setColliders() {
+    this.physics.add.collider(this.rockGroup);
+    this.physics.add.collider(this.playerBulletGroup, this.rockGroup, this.destroyRock, null, this);
+    this.physics.add.collider(this.enemyBulletGroup, this.rockGroup, this.destroyRock, null, this);
+    this.physics.add.collider(this.playerBulletGroup, this.enemyShip, this.damageEnemyShip, null, this);
+    this.physics.add.collider(this.enemyBulletGroup, this.playerShip, this.damagePlayerShip, null, this);
   }
 
   updateFrameNames(frameNames) {
@@ -106,6 +113,20 @@ class SceneMain extends Phaser.Scene {
     explosion.play('boom');
     bullet.destroy();
     rock.destroy();
+  }
+
+  damageEnemyShip(enemyShip, playerBullet) {
+    const explosion = this.add.sprite(playerBullet.x, playerBullet.y, 'exp');
+    explosion.play('boom');
+    console.log('player gives damage to enemy ship');
+    playerBullet.destroy();
+  }
+
+  damagePlayerShip(playerShip, enemyBullet) {
+    const explosion = this.add.sprite(playerShip.x, playerShip.y, 'exp');
+    explosion.play('boom');
+    console.log('enemy gives damage to player ship');
+    enemyBullet.destroy();
   }
 
   getTimer() {
@@ -125,25 +146,25 @@ class SceneMain extends Phaser.Scene {
       const ty = this.background.input.localY;
       this.tx = tx;
       this.ty = ty;
-      let angle = this.physics.moveTo(this.ship, tx, ty, 250);
+      let angle = this.physics.moveTo(this.playerShip, tx, ty, 250);
       angle = this.toDegrees(angle);
-      this.ship.angle = angle;
-      console.log(this.ship.angle);
+      this.playerShip.angle = angle;
+      console.log(this.playerShip.angle);
     } else {
       this.fireBulletForPlayerShip();
     }
 
-    let angleForEnemyShip = this.physics.moveTo(this.enemyShip, this.ship.x, this.ship.y, 60);
+    let angleForEnemyShip = this.physics.moveTo(this.enemyShip, this.playerShip.x, this.playerShip.y, 60);
     angleForEnemyShip = this.toDegrees(angleForEnemyShip);
     this.enemyShip.angle = angleForEnemyShip;
 
   }
 
   fireBulletForPlayerShip() {
-    const directionObj = this.getDirectionFromAngle(this.ship.angle);
-    const bullet = this.physics.add.sprite(this.ship.x + directionObj.tx * 30, this.ship.y + directionObj.ty + 30, 'bullet');
-    this.bulletGroup.add(bullet);
-    bullet.angle = this.ship.angle;
+    const directionObj = this.getDirectionFromAngle(this.playerShip.angle);
+    const bullet = this.physics.add.sprite(this.playerShip.x + directionObj.tx * 30, this.playerShip.y + directionObj.ty + 30, 'bullet');
+    this.playerBulletGroup.add(bullet);
+    bullet.angle = this.playerShip.angle;
     bullet.body.setVelocity(directionObj.tx * 100, directionObj.ty * 100);
   }
 
@@ -154,8 +175,9 @@ class SceneMain extends Phaser.Scene {
     }
     this.lastTimeEnemyBulletFired = this.getTimer();
     const enemyBullet = this.physics.add.sprite(this.enemyShip.x, this.enemyShip.y, 'enemyBullet');
+    this.enemyBulletGroup.add(enemyBullet);
     enemyBullet.body.angularVelocity = 10;
-    this.physics.moveTo(enemyBullet, this.ship.x, this.ship.y, 100);
+    this.physics.moveTo(enemyBullet, this.playerShip.x, this.playerShip.y, 100);
   }
 
   toDegrees(angle) {
@@ -198,14 +220,14 @@ class SceneMain extends Phaser.Scene {
 
   update() {
     // constant running loop
-    const distanceX = Math.abs(this.ship.x - this.tx);
-    const distanceY = Math.abs(this.ship.y - this.ty);
+    const distanceX = Math.abs(this.playerShip.x - this.tx);
+    const distanceY = Math.abs(this.playerShip.y - this.ty);
     if (distanceX < 10 && distanceY < 10) {
-      this.ship.body.setVelocity(0, 0);
+      this.playerShip.body.setVelocity(0, 0);
     }
 
-    const distanceX2 = Math.abs(this.ship.x - this.enemyShip.x);
-    const distanceY2 = Math.abs(this.ship.y - this.enemyShip.y);
+    const distanceX2 = Math.abs(this.playerShip.x - this.enemyShip.x);
+    const distanceY2 = Math.abs(this.playerShip.y - this.enemyShip.y);
     if (distanceX2 < this.game.config.width / 3 && distanceY2 < this.game.config.height / 3) {
       this.fireBulletForEnemyShip();
     }
