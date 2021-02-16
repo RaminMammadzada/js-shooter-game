@@ -43,6 +43,8 @@ class SceneMain extends Phaser.Scene {
     this.playerShip.setInteractive();
     this.playerShip.on('pointerdown', this.fireBulletForPlayerShip, this);
 
+    this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
     // this.background.scaleX = this.playerShip.scaleX;
     // this.background.scaleY = this.playerShip.scaleY;
     this.background.setInteractive();
@@ -52,17 +54,17 @@ class SceneMain extends Phaser.Scene {
 
     this.cameras.main.setBounds(0, 0, this.background.displayWidth, this.background.displayHeight);
     this.cameras.main.startFollow(this.playerShip, true);
+
     this.rockGroup = this.physics.add.group({
       key: 'rocks',
-      frame: [0, 1, 2],
+      frame: [0, 1, 2, 3],
       frameQuantity: 4,
       bounceX: 1,
       bounceY: 1,
       angularVelocity: 1,
       collideWorldBounds: true,
     });
-    this.playerBulletGroup = this.physics.add.group();
-    this.enemyBulletGroup = this.physics.add.group();
+
     this.rockGroup.children.iterate((child) => {
       const xx = Math.floor(Math.random() * this.background.displayWidth);
       const yy = Math.floor(Math.random() * this.background.displayHeight);
@@ -83,6 +85,9 @@ class SceneMain extends Phaser.Scene {
       const speed = Math.floor(Math.random() * 200) + 10;
       child.body.setVelocity(vx * speed, vy * speed);
     });
+
+    this.playerBulletGroup = this.physics.add.group();
+    this.enemyBulletGroup = this.physics.add.group();
 
     const frameNames = this.anims.generateFrameNumbers('exp');
 
@@ -264,6 +269,41 @@ class SceneMain extends Phaser.Scene {
     this.icon2.setScrollFactor(0);
   }
 
+  addRocks() {
+    if (this.rockGroup.getChildren().length === 0) {
+      this.rockGroup = this.physics.add.group({
+        key: 'rocks',
+        frame: [0, 1, 2],
+        frameQuantity: 7,
+        bounceX: 1,
+        bounceY: 1,
+        angularVelocity: 1,
+        collideWorldBounds: true,
+      });
+
+      this.rockGroup.children.iterate((child) => {
+        const xx = Math.floor(Math.random() * this.background.displayWidth);
+        const yy = Math.floor(Math.random() * this.background.displayHeight);
+
+        child.x = xx;
+        child.y = yy;
+
+        Align.scaleToGameW(child, 0.1, this.game);
+
+        let vx = Math.floor(Math.random() * 2 - 1);
+        let vy = Math.floor(Math.random() * 2 - 1);
+
+        if (vx === 0 * vy === 0) {
+          vx = 1;
+          vy = 1;
+        }
+
+        const speed = Math.floor(Math.random() * 200) + 10;
+        child.body.setVelocity(vx * speed, vy * speed);
+      });
+    }
+  }
+
   update() {
     // constant running loop
     const distanceX = Math.abs(this.playerShip.x - this.tx);
@@ -276,6 +316,10 @@ class SceneMain extends Phaser.Scene {
     const distanceY2 = Math.abs(this.playerShip.y - this.enemyShip.y);
     if (distanceX2 < this.game.config.width / 3 && distanceY2 < this.game.config.height / 3) {
       this.fireBulletForEnemyShip();
+    }
+
+    if (this.keySpace.isDown) {
+      this.fireBulletForPlayerShip();
     }
   }
 }

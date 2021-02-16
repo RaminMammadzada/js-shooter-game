@@ -5,7 +5,7 @@ class Model {
   constructor() {
     this._score = 0;
     this.soundOn = true;
-    this._musicOn = false;
+    this._musicOn = true;
   }
 
   set musicOn(val) {
