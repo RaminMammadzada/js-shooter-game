@@ -20,7 +20,7 @@ if (isMobile === -1) {
     physics: {
       default: 'arcade',
       arcade: {
-        debug: true,
+        debug: false,
       },
     },
     scene: [SceneLoad, SceneTitle, SceneMain, SceneOver],
@@ -34,7 +34,7 @@ if (isMobile === -1) {
     physics: {
       default: 'arcade',
       arcade: {
-        debug: true,
+        debug: false,
       },
     },
     scene: [SceneLoad, SceneTitle, SceneMain, SceneOver],

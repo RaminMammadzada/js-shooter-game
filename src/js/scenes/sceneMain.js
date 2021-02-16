@@ -27,6 +27,7 @@ class SceneMain extends Phaser.Scene {
 
     const sb = new SoundButtons({ scene: this });
     sb.depth = 1;
+    sb.setScrollFactor(0);
 
     this.centerX = this.game.config.width / 2;
     this.center = this.game.config.height / 2;
@@ -175,7 +176,7 @@ class SceneMain extends Phaser.Scene {
     this.text1.setOrigin(0.5, 0.5);
     this.text2.setOrigin(0.5, 0.5);
     this.uiGrid = new AlignGrid({ scene: this, rows: 11, cols: 11 });
-    this.uiGrid.showNumbers();
+    // this.uiGrid.showNumbers();
 
     this.uiGrid.placeAtIndex(3, this.text1);
     this.uiGrid.placeAtIndex(9, this.text2);
@@ -189,6 +190,10 @@ class SceneMain extends Phaser.Scene {
     this.icon2.angle = 270;
     this.icon1.angle = 270;
 
+    this.text1.setScrollFactor(0);
+    this.text2.setScrollFactor(0);
+    this.icon1.setScrollFactor(0);
+    this.icon2.setScrollFactor(0);
   }
 
   update() {
