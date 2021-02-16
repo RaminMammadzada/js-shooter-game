@@ -86,6 +86,10 @@ class SceneMain extends Phaser.Scene {
       frameRate: 40,
       repeat: false,
     });
+
+    this.enemyShip = this.physics.add.sprite(this.centerX, 0, 'enemyShip');
+    Align.scaleToGameW(this.enemyShip, 0.25, this.game);
+
   }
 
   updateFrameNames(frameNames) {
@@ -125,6 +129,11 @@ class SceneMain extends Phaser.Scene {
     } else {
       this.createBullet();
     }
+
+    let angleForEnemyShip = this.physics.moveTo(this.enemyShip, this.ship.x, this.ship.y, 60);
+    angleForEnemyShip = this.toDegrees(angleForEnemyShip);
+    this.enemyShip.angle = angleForEnemyShip;
+
   }
 
   createBullet() {
@@ -152,6 +161,14 @@ class SceneMain extends Phaser.Scene {
     const distanceY = Math.abs(this.ship.y - this.ty);
     if (distanceX < 10 && distanceY < 10) {
       this.ship.body.setVelocity(0, 0);
+    }
+
+    const distanceX2 = Math.abs(this.ship.x - this.enemyShip.x);
+    const distanceY2 = Math.abs(this.ship.y - this.enemyShip.y);
+    if (distanceX2 < this.game.config.width / 3 && distanceY2 < this.game.config.height / 3) {
+      this.enemyShip.alpha = 0.5;
+    } else {
+      this.enemyShip.alpha = 1;
     }
   }
 }
