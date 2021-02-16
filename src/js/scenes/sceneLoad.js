@@ -7,14 +7,12 @@ import musicOff from '../../images/ui/icons/music_off.png';
 import player from '../../images/player.png';
 import backgroundImage from '../../images/background.jpg';
 import rocks from '../../images/rocks.png';
+import bullet from '../../images/bullet.png';
 import Bar from '../classes/comps/bar';
 // import button1 from '../../images/ui/buttons/2/1.png';
 // import button2 from '../../images/ui/buttons/2/5.png';
 import backgroundMusic1 from '../../audio/background.mp3';
 import backgroundMusic2 from '../../audio/background.ogg';
-
-
-
 
 class SceneLoad extends Phaser.Scene {
   constructor() {
@@ -53,6 +51,7 @@ class SceneLoad extends Phaser.Scene {
     this.load.image('background', backgroundImage);
 
     this.load.spritesheet('rocks', rocks, { frameWidth: 125, frameHeight: 100 });
+    this.load.image('bullet', bullet);
   }
 
   onProgress(value) {
