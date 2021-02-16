@@ -77,7 +77,7 @@ module.exports = {
       'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
     },
     allowedHosts: [
-      'localhost:8078',
+      'localhost:8077',
       'labs.phaser.io',
     ],
   },

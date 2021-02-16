@@ -4,6 +4,8 @@ import sfxOff from '../../images/ui/icons/sfx_off.png';
 import sfxOn from '../../images/ui/icons/sfx_on.png';
 import musicOn from '../../images/ui/icons/music_on.png';
 import musicOff from '../../images/ui/icons/music_off.png';
+import player from '../../images/player.png';
+import backgroundImage from '../../images/background.jpg';
 import Bar from '../classes/comps/bar';
 // import button1 from '../../images/ui/buttons/2/1.png';
 // import button2 from '../../images/ui/buttons/2/5.png';
@@ -45,6 +47,9 @@ class SceneLoad extends Phaser.Scene {
     this.load.image('sfxOn', sfxOn);
     this.load.image('musicOn', musicOn);
     this.load.image('musicOff', musicOff);
+
+    this.load.image('ship', player);
+    this.load.image('background', backgroundImage);
   }
 
   onProgress(value) {

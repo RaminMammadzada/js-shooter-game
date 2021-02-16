@@ -6,7 +6,7 @@ import Constants from '../../constants';
 class SoundButtons extends Phaser.GameObjects.Container {
   constructor(config) {
     super(config.scene);
-    console.log(Constants.TOGGLE_MUSIC);
+    // console.log(Constants.TOGGLE_MUSIC);
     this.scene = config.scene;
     this.musicButton = new ToggleButton({
       scene: this.scene,
