@@ -53,7 +53,7 @@ class SceneMain extends Phaser.Scene {
       angularVelocity: 1,
       collideWorldBounds: true,
     });
-
+    this.bulletGroup = this.physics.add.group();
     this.rockGroup.children.iterate((child) => {
       const xx = Math.floor(Math.random() * this.background.displayWidth);
       const yy = Math.floor(Math.random() * this.background.displayHeight);
@@ -76,6 +76,29 @@ class SceneMain extends Phaser.Scene {
     });
 
     this.physics.add.collider(this.rockGroup);
+    this.physics.add.collider(this.bulletGroup, this.rockGroup, this.destroyRock, null, this);
+
+    const frameNames = this.anims.generateFrameNumbers('exp');
+
+    this.anims.create({
+      key: 'boom',
+      frames: this.updateFrameNames(frameNames),
+      frameRate: 40,
+      repeat: false,
+    });
+  }
+
+  updateFrameNames(frameNames) {
+    const frameNamesSliced = frameNames.slice();
+    frameNamesSliced.reverse();
+    return frameNamesSliced.concat(frameNames);
+  }
+
+  destroyRock(bullet, rock) {
+    const explosion = this.add.sprite(rock.x, rock.y, 'exp');
+    explosion.play('boom');
+    bullet.destroy();
+    rock.destroy();
   }
 
   getTimer() {
@@ -107,6 +130,7 @@ class SceneMain extends Phaser.Scene {
   createBullet() {
     const directionObj = this.getDirectionFromAngle(this.ship.angle);
     const bullet = this.physics.add.sprite(this.ship.x + directionObj.tx * 30, this.ship.y + directionObj.ty + 30, 'bullet');
+    this.bulletGroup.add(bullet);
     bullet.angle = this.ship.angle;
     bullet.body.setVelocity(directionObj.tx * 100, directionObj.ty * 100);
   }

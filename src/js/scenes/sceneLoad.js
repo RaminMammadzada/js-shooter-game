@@ -8,6 +8,7 @@ import player from '../../images/player.png';
 import backgroundImage from '../../images/background.jpg';
 import rocks from '../../images/rocks.png';
 import bullet from '../../images/bullet.png';
+import exp from '../../images/exp.png';
 import Bar from '../classes/comps/bar';
 // import button1 from '../../images/ui/buttons/2/1.png';
 // import button2 from '../../images/ui/buttons/2/5.png';
@@ -51,6 +52,7 @@ class SceneLoad extends Phaser.Scene {
     this.load.image('background', backgroundImage);
 
     this.load.spritesheet('rocks', rocks, { frameWidth: 125, frameHeight: 100 });
+    this.load.spritesheet('exp', exp, { frameWidth: 64, frameHeight: 64 });
     this.load.image('bullet', bullet);
   }
 
