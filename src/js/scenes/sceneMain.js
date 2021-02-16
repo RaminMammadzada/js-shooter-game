@@ -37,14 +37,17 @@ class SceneMain extends Phaser.Scene {
     this.playerShip = this.physics.add.sprite(this.centerX, this.centerY, 'ship');
     Align.scaleToGameW(this.playerShip, 0.125, this.game);
     this.playerShip.body.collideWorldBounds = true;
-
+    this.playerShip.setInteractive();
+    this.playerShip.on('pointerdown', this.fireBulletForPlayerShip, this);
 
     // this.background.scaleX = this.playerShip.scaleX;
     // this.background.scaleY = this.playerShip.scaleY;
     this.background.setInteractive();
     this.background.on('pointerup', this.backgroundClicked, this);
-    this.background.on('pointerdown', this.onDown, this);
+    // this.background.on('pointerdown', this.onDown, this);
     this.physics.world.setBounds(0, 0, this.background.displayWidth, this.background.displayHeight);
+
+
 
     this.cameras.main.setBounds(0, 0, this.background.displayWidth, this.background.displayHeight);
     this.cameras.main.startFollow(this.playerShip, true);
@@ -146,31 +149,36 @@ class SceneMain extends Phaser.Scene {
   }
 
   backgroundClicked() {
-    const elapsed = Math.abs(this.downTime - this.getTimer());
-    console.log(elapsed);
-    if (elapsed < 300) {
-      const tx = this.background.input.localX;
-      const ty = this.background.input.localY;
-      this.tx = tx;
-      this.ty = ty;
-      let angle = this.physics.moveTo(this.playerShip, tx, ty, 250);
-      angle = this.toDegrees(angle);
-      this.playerShip.angle = angle;
-      console.log(this.playerShip.angle);
+    // const elapsed = Math.abs(this.downTime - this.getTimer());
+    // console.log(elapsed);
+    // if (true) {
+    const tx = this.background.input.localX;
+    const ty = this.background.input.localY;
+    this.tx = tx;
+    this.ty = ty;
+    let angle = this.physics.moveTo(this.playerShip, tx, ty, 250);
+    angle = this.toDegrees(angle);
+    this.playerShip.angle = angle;
+    console.log(this.playerShip.angle);
 
-      const distanceX2 = Math.abs(this.playerShip.x - this.tx);
-      const distanceY2 = Math.abs(this.playerShip.y - this.tx);
-      if (distanceX2 < this.game.config.width / 3 && distanceY2 < this.game.config.height / 3) {
-        let angleForEnemyShip = this.physics.moveTo(this.enemyShip, this.playerShip.x, this.playerShip.y, 60);
-        angleForEnemyShip = this.toDegrees(angleForEnemyShip);
-        this.enemyShip.angle = angleForEnemyShip;
-      }
-    } else {
-      this.fireBulletForPlayerShip();
+    const distanceX2 = Math.abs(this.playerShip.x - this.tx);
+    const distanceY2 = Math.abs(this.playerShip.y - this.tx);
+    if (distanceX2 < this.game.config.width / 3 && distanceY2 < this.game.config.height / 3) {
+      let angleForEnemyShip = this.physics.moveTo(this.enemyShip, this.playerShip.x, this.playerShip.y, 60);
+      angleForEnemyShip = this.toDegrees(angleForEnemyShip);
+      this.enemyShip.angle = angleForEnemyShip;
     }
+    //   } else {
+    //   this.fireBulletForPlayerShip();
+    // }
   }
 
   fireBulletForPlayerShip() {
+    const elapsed = Math.abs(this.lastTimePlayerBulletFired - this.getTimer());
+    if (elapsed < 300) {
+      return;
+    }
+    this.lastTimePlayerBulletFired = this.getTimer();
     const directionObj = this.getDirectionFromAngle(this.playerShip.angle);
     const bullet = this.physics.add.sprite(this.playerShip.x + directionObj.tx * 30, this.playerShip.y + directionObj.ty + 30, 'bullet');
     this.playerBulletGroup.add(bullet);
