@@ -106,6 +106,8 @@ class SceneMain extends Phaser.Scene {
     this.physics.add.collider(this.enemyBulletGroup, this.rockGroup, this.destroyRock, null, this);
     this.physics.add.collider(this.playerBulletGroup, this.enemyShip, this.damageEnemyShip, null, this);
     this.physics.add.collider(this.enemyBulletGroup, this.playerShip, this.damagePlayerShip, null, this);
+    this.physics.add.collider(this.rockGroup, this.playerShip, this.rockHitPlayerShip, null, this);
+    this.physics.add.collider(this.rockGroup, this.enemyShip, this.rockHitEnemyShip, null, this);
   }
 
   updateFrameNames(frameNames) {
@@ -114,11 +116,21 @@ class SceneMain extends Phaser.Scene {
     return frameNamesSliced.concat(frameNames);
   }
 
+  rockHitPlayerShip(playerShip, rock) {
+    this.destroyRock(null, rock);
+  }
+
+  rockHitEnemyShip(enemyShip, rock) {
+    this.destroyRock(null, rock);
+  }
+
   destroyRock(bullet, rock) {
     const explosion = this.add.sprite(rock.x, rock.y, 'exp');
     explosion.play('boom');
-    bullet.destroy();
     rock.destroy();
+    if (bullet !== null) {
+      bullet.destroy();
+    }
   }
 
   damageEnemyShip(enemyShip, playerBullet) {
