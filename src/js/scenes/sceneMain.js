@@ -29,6 +29,9 @@ class SceneMain extends Phaser.Scene {
     sb.depth = 1;
     sb.setScrollFactor(0);
 
+    this.playerPower = 100;
+    this.enemyPower = 100;
+
     this.centerX = this.game.config.width / 2;
     this.center = this.game.config.height / 2;
 
@@ -46,8 +49,6 @@ class SceneMain extends Phaser.Scene {
     this.background.on('pointerup', this.backgroundClicked, this);
     // this.background.on('pointerdown', this.onDown, this);
     this.physics.world.setBounds(0, 0, this.background.displayWidth, this.background.displayHeight);
-
-
 
     this.cameras.main.setBounds(0, 0, this.background.displayWidth, this.background.displayHeight);
     this.cameras.main.startFollow(this.playerShip, true);
@@ -116,12 +117,24 @@ class SceneMain extends Phaser.Scene {
     return frameNamesSliced.concat(frameNames);
   }
 
+  decreasePlayerPower() {
+    this.playerPower -= 1;
+    this.playerPowerText.setText(`Player Power\n ${this.playerPower}`);
+  }
+
+  decreaseEnemyPower() {
+    this.enemyPower -= 1;
+    this.enemyPowerText.setText(`Enemy Power\n ${this.enemyPower}`);
+  }
+
   rockHitPlayerShip(playerShip, rock) {
     this.destroyRock(null, rock);
+    this.decreasePlayerPower();
   }
 
   rockHitEnemyShip(enemyShip, rock) {
     this.destroyRock(null, rock);
+    this.decreaseEnemyPower();
   }
 
   destroyRock(bullet, rock) {
@@ -142,6 +155,8 @@ class SceneMain extends Phaser.Scene {
     let angleForEnemyShip = this.physics.moveTo(this.enemyShip, this.playerShip.x, this.playerShip.y, 120);
     angleForEnemyShip = this.toDegrees(angleForEnemyShip);
     this.enemyShip.angle = angleForEnemyShip;
+
+    this.decreaseEnemyPower();
   }
 
   damagePlayerShip(playerShip, enemyBullet) {
@@ -149,6 +164,7 @@ class SceneMain extends Phaser.Scene {
     explosion.play('boom');
     console.log('enemy gives damage to player ship');
     enemyBullet.destroy();
+    this.decreasePlayerPower();
   }
 
   getTimer() {
@@ -222,16 +238,16 @@ class SceneMain extends Phaser.Scene {
   }
 
   showInfo() {
-    this.text1 = this.add.text(0, 0, 'Player power\n100', { fontSize: this.game.config.width / 40, align: 'center', backgroundColor: '#210EC9' });
-    this.text2 = this.add.text(0, 0, 'Enemy power\n100', { fontSize: this.game.config.width / 40, align: 'center', backgroundColor: '#210EC9' });
+    this.playerPowerText = this.add.text(0, 0, 'Player power\n100', { fontSize: this.game.config.width / 40, align: 'center', backgroundColor: '#210EC9' });
+    this.enemyPowerText = this.add.text(0, 0, 'Enemy power\n100', { fontSize: this.game.config.width / 40, align: 'center', backgroundColor: '#210EC9' });
 
-    this.text1.setOrigin(0.5, 0.5);
-    this.text2.setOrigin(0.5, 0.5);
+    this.playerPowerText.setOrigin(0.5, 0.5);
+    this.enemyPowerText.setOrigin(0.5, 0.5);
     this.uiGrid = new AlignGrid({ scene: this, rows: 11, cols: 11 });
     // this.uiGrid.showNumbers();
 
-    this.uiGrid.placeAtIndex(3, this.text1);
-    this.uiGrid.placeAtIndex(9, this.text2);
+    this.uiGrid.placeAtIndex(3, this.playerPowerText);
+    this.uiGrid.placeAtIndex(9, this.enemyPowerText);
 
     this.icon1 = this.add.image(0, 0, 'ship');
     this.icon2 = this.add.image(0, 0, 'enemyShip');
@@ -242,8 +258,8 @@ class SceneMain extends Phaser.Scene {
     this.icon2.angle = 270;
     this.icon1.angle = 270;
 
-    this.text1.setScrollFactor(0);
-    this.text2.setScrollFactor(0);
+    this.playerPowerText.setScrollFactor(0);
+    this.enemyPowerText.setScrollFactor(0);
     this.icon1.setScrollFactor(0);
     this.icon2.setScrollFactor(0);
   }
