@@ -70,14 +70,14 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
-    port: 8076,
+    port: 8075,
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
       'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
     },
     allowedHosts: [
-      'localhost:8076',
+      'localhost:8075',
       'labs.phaser.io',
     ],
   },
