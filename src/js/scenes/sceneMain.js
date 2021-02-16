@@ -127,7 +127,7 @@ class SceneMain extends Phaser.Scene {
       this.ship.angle = angle;
       console.log(this.ship.angle);
     } else {
-      this.createBullet();
+      this.fireBulletForPlayerShip();
     }
 
     let angleForEnemyShip = this.physics.moveTo(this.enemyShip, this.ship.x, this.ship.y, 60);
@@ -136,12 +136,23 @@ class SceneMain extends Phaser.Scene {
 
   }
 
-  createBullet() {
+  fireBulletForPlayerShip() {
     const directionObj = this.getDirectionFromAngle(this.ship.angle);
     const bullet = this.physics.add.sprite(this.ship.x + directionObj.tx * 30, this.ship.y + directionObj.ty + 30, 'bullet');
     this.bulletGroup.add(bullet);
     bullet.angle = this.ship.angle;
     bullet.body.setVelocity(directionObj.tx * 100, directionObj.ty * 100);
+  }
+
+  fireBulletForEnemyShip() {
+    const elapsed = Math.abs(this.lastTimeEnemyBulletFired - this.getTimer());
+    if (elapsed < 3000) {
+      return;
+    }
+    this.lastTimeEnemyBulletFired = this.getTimer();
+    const enemyBullet = this.physics.add.sprite(this.enemyShip.x, this.enemyShip.y, 'enemyBullet');
+    enemyBullet.body.angularVelocity = 10;
+    this.physics.moveTo(enemyBullet, this.ship.x, this.ship.y, 100);
   }
 
   toDegrees(angle) {
@@ -166,9 +177,7 @@ class SceneMain extends Phaser.Scene {
     const distanceX2 = Math.abs(this.ship.x - this.enemyShip.x);
     const distanceY2 = Math.abs(this.ship.y - this.enemyShip.y);
     if (distanceX2 < this.game.config.width / 3 && distanceY2 < this.game.config.height / 3) {
-      this.enemyShip.alpha = 0.5;
-    } else {
-      this.enemyShip.alpha = 1;
+      this.fireBulletForEnemyShip();
     }
   }
 }
