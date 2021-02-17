@@ -7,6 +7,7 @@ import Align from '../classes/util/align';
 import AlignGrid from '../classes/util/alignGrid';
 import Constants from '../constants';
 import Model from '../classes/modelAndController/model';
+import ScoreBox from '../classes/comps/scoreBox';
 
 class SceneMain extends Phaser.Scene {
   constructor() {
@@ -85,16 +86,16 @@ class SceneMain extends Phaser.Scene {
   }
 
   setColliders() {
-    this.physics.add.collider(this.playerBulletGroup, this.enemyShip, this.damageEnemyShip, null, this);
+    this.physics.add.collider(this.playerBulletGroup, this.enemyShip, this.damageEnemyShip, this.increaseScore, this);
     this.physics.add.collider(this.enemyBulletGroup, this.playerShip, this.damagePlayerShip, null, this);
-    this.physics.add.collider(this.enemyBulletGroup, this.playerBulletGroup, this.destroyBullets, null, this);
+    this.physics.add.collider(this.enemyBulletGroup, this.playerBulletGroup, this.destroyBullets, this.increaseScore, this);
   }
 
   setRockColliders() {
     this.physics.add.collider(this.rockGroup);
     this.physics.add.collider(this.rockGroup, this.playerShip, this.rockHitPlayerShip, null, this);
     this.physics.add.collider(this.rockGroup, this.enemyShip, this.rockHitEnemyShip, null, this);
-    this.physics.add.collider(this.playerBulletGroup, this.rockGroup, this.destroyRock, null, this);
+    this.physics.add.collider(this.playerBulletGroup, this.rockGroup, this.destroyRock, this.increaseScore, this);
     this.physics.add.collider(this.enemyBulletGroup, this.rockGroup, this.destroyRock, null, this);
   }
 
@@ -102,6 +103,11 @@ class SceneMain extends Phaser.Scene {
     const frameNamesSliced = frameNames.slice();
     frameNamesSliced.reverse();
     return frameNamesSliced.concat(frameNames);
+  }
+
+  increaseScore() {
+    EventEmitter.emit(Constants.UP_POINTS, 1);
+    return true;
   }
 
   destroyBullets(playerBullet, enemyBullet) {
@@ -248,9 +254,11 @@ class SceneMain extends Phaser.Scene {
     }
     this.lastTimeEnemyBulletFired = this.getTimer();
     const enemyBullet = this.physics.add.sprite(this.enemyShip.x, this.enemyShip.y, 'enemyBullet');
-    this.enemyBulletGroup.add(enemyBullet);
     enemyBullet.body.angularVelocity = 10;
-    this.physics.moveTo(enemyBullet, this.playerShip.x, this.playerShip.y, 100);
+
+    enemyBullet.angle = this.enemyShip.angle;
+    this.enemyBulletGroup.add(enemyBullet);
+    this.physics.moveTo(enemyBullet, this.playerShip.x, this.playerShip.y, 150);
     EventEmitter.emit(Constants.PLAY_SOUND, 'playerShoot');
   }
 
@@ -266,8 +274,8 @@ class SceneMain extends Phaser.Scene {
   }
 
   showInfo() {
-    this.playerPowerText = this.add.text(0, 0, 'Player power\n100', { fontSize: this.game.config.width / 40, align: 'center', backgroundColor: '#210EC9' });
-    this.enemyPowerText = this.add.text(0, 0, 'Enemy power\n100', { fontSize: this.game.config.width / 40, align: 'center', backgroundColor: '#210EC9' });
+    this.playerPowerText = this.add.text(0, 0, 'Player power\n100', { fontSize: this.game.config.width / 30, align: 'center' });
+    this.enemyPowerText = this.add.text(0, 0, 'Enemy power\n100', { fontSize: this.game.config.width / 30, align: 'center' });
 
     this.playerPowerText.setOrigin(0.5, 0.5);
     this.enemyPowerText.setOrigin(0.5, 0.5);
@@ -279,8 +287,8 @@ class SceneMain extends Phaser.Scene {
 
     this.icon1 = this.add.image(0, 0, 'playerShip');
     this.icon2 = this.add.image(0, 0, 'enemyShip');
-    Align.scaleToGameW(this.icon1, 0.05, this.game);
-    Align.scaleToGameW(this.icon2, 0.05, this.game);
+    Align.scaleToGameW(this.icon1, 0.1, this.game);
+    Align.scaleToGameW(this.icon2, 0.1, this.game);
     this.uiGrid.placeAtIndex(1, this.icon1);
     this.uiGrid.placeAtIndex(7, this.icon2);
     this.icon1.angle = 0;
@@ -290,6 +298,9 @@ class SceneMain extends Phaser.Scene {
     this.enemyPowerText.setScrollFactor(0);
     this.icon1.setScrollFactor(0);
     this.icon2.setScrollFactor(0);
+
+    this.scoreBox = new ScoreBox({ scene: this });
+    this.uiGrid.placeAtIndex(16, this.scoreBox);
   }
 
   addRocks() {
