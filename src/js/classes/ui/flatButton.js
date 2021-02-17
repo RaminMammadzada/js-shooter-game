@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import EventEmitter from '../util/eventEmitter';
-import Model from '../mc/model';
+import Model from '../modelAndController/model';
 
 class FlatButton extends Phaser.GameObjects.Container {
   constructor(config) {

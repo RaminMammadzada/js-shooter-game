@@ -3,7 +3,7 @@ import SceneLoad from './scenes/SceneLoad';
 import SceneTitle from './scenes/SceneTitle';
 import SceneMain from './scenes/SceneMain';
 import SceneOver from './scenes/SceneOver';
-import Model from './classes/mc/model';
+import Model from './classes/modelAndController/model';
 
 let isMobile = navigator.userAgent.indexOf('Mobile');
 Model.isMobile = isMobile;

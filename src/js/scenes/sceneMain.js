@@ -2,11 +2,11 @@ import Phaser from 'phaser';
 import EventEmitter from '../classes/util/eventEmitter';
 import MediaManager from '../classes/util/mediaManager';
 import SoundButtons from '../classes/ui/soundButtons';
-import Controller from '../classes/mc/controller';
+import Controller from '../classes/modelAndController/controller';
 import Align from '../classes/util/align';
 import AlignGrid from '../classes/util/alignGrid';
 import Constants from '../constants';
-import Model from '../classes/mc/model'
+import Model from '../classes/modelAndController/model'
 import { Modal } from 'bootstrap';
 
 class SceneMain extends Phaser.Scene {
@@ -26,8 +26,8 @@ class SceneMain extends Phaser.Scene {
     const mediaManager = new MediaManager({ scene: this });
     mediaManager.setBackgroundMusic('backgroundMusic');
 
-    this.playerPower = 5;
-    this.enemyPower = 5;
+    this.playerPower = 30;
+    this.enemyPower = 30;
     Modal.playerWon = true;
 
     this.centerX = this.game.config.width / 2;
@@ -53,37 +53,6 @@ class SceneMain extends Phaser.Scene {
     this.cameras.main.setBounds(0, 0, this.background.displayWidth, this.background.displayHeight);
     this.cameras.main.startFollow(this.playerShip, true);
 
-    this.rockGroup = this.physics.add.group({
-      key: 'rocks',
-      frame: [0, 1, 2, 3],
-      frameQuantity: 4,
-      bounceX: 1,
-      bounceY: 1,
-      angularVelocity: 1,
-      collideWorldBounds: true,
-    });
-
-    this.rockGroup.children.iterate((child) => {
-      const xx = Math.floor(Math.random() * this.background.displayWidth);
-      const yy = Math.floor(Math.random() * this.background.displayHeight);
-
-      child.x = xx;
-      child.y = yy;
-
-      Align.scaleToGameW(child, 0.1, this.game);
-
-      let vx = Math.floor(Math.random() * 2 - 1);
-      let vy = Math.floor(Math.random() * 2 - 1);
-
-      if (vx === 0 * vy === 0) {
-        vx = 1;
-        vy = 1;
-      }
-
-      const speed = Math.floor(Math.random() * 200) + 10;
-      child.body.setVelocity(vx * speed, vy * speed);
-    });
-
     this.playerBulletGroup = this.physics.add.group();
     this.enemyBulletGroup = this.physics.add.group();
 
@@ -100,6 +69,9 @@ class SceneMain extends Phaser.Scene {
     Align.scaleToGameW(this.enemyShip, 0.25, this.game);
     this.enemyShip.body.collideWorldBounds = true;
 
+    this.rockGroup = this.physics.add.group();
+    this.addRocks();
+
     this.showInfo();
     this.setColliders();
 
@@ -107,13 +79,16 @@ class SceneMain extends Phaser.Scene {
   }
 
   setColliders() {
-    this.physics.add.collider(this.rockGroup);
-    this.physics.add.collider(this.playerBulletGroup, this.rockGroup, this.destroyRock, null, this);
-    this.physics.add.collider(this.enemyBulletGroup, this.rockGroup, this.destroyRock, null, this);
     this.physics.add.collider(this.playerBulletGroup, this.enemyShip, this.damageEnemyShip, null, this);
     this.physics.add.collider(this.enemyBulletGroup, this.playerShip, this.damagePlayerShip, null, this);
+  }
+
+  setRockColliders() {
+    this.physics.add.collider(this.rockGroup);
     this.physics.add.collider(this.rockGroup, this.playerShip, this.rockHitPlayerShip, null, this);
     this.physics.add.collider(this.rockGroup, this.enemyShip, this.rockHitEnemyShip, null, this);
+    this.physics.add.collider(this.playerBulletGroup, this.rockGroup, this.destroyRock, null, this);
+    this.physics.add.collider(this.enemyBulletGroup, this.rockGroup, this.destroyRock, null, this);
   }
 
   updateFrameNames(frameNames) {
@@ -143,6 +118,7 @@ class SceneMain extends Phaser.Scene {
   rockHitPlayerShip(playerShip, rock) {
     this.destroyRock(null, rock);
     this.decreasePlayerPower();
+    EventEmitter.emit(Constants.PLAY_SOUND, 'explode');
   }
 
   rockHitEnemyShip(enemyShip, rock) {
@@ -153,11 +129,11 @@ class SceneMain extends Phaser.Scene {
   destroyRock(bullet, rock) {
     const explosion = this.add.sprite(rock.x, rock.y, 'exp');
     explosion.play('boom');
-    EventEmitter.emit(Constants.PLAY_SOUND, 'explode');
     rock.destroy();
     if (bullet !== null) {
       bullet.destroy();
     }
+    this.addRocks();
   }
 
   damageEnemyShip(enemyShip, playerBullet) {
@@ -314,6 +290,7 @@ class SceneMain extends Phaser.Scene {
         const speed = Math.floor(Math.random() * 200) + 10;
         child.body.setVelocity(vx * speed, vy * speed);
       });
+      this.setRockColliders();
     }
   }
 

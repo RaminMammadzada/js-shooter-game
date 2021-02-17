@@ -1,4 +1,4 @@
-import Model from '../mc/model';
+import Model from '../modelAndController/model';
 import EventEmitter from './eventEmitter';
 import Constants from '../../constants';
 
@@ -23,7 +23,7 @@ class MediaManager {
 
   playSound(key) {
     if (Model.soundOn) {
-      const sound = this.scene.sound.add(key);
+      const sound = this.scene.sound.add(key, { volume: 0.2 });
       sound.play();
     }
   }

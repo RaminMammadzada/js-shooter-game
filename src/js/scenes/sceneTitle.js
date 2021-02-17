@@ -5,7 +5,7 @@ import EventEmitter from '../classes/util/eventEmitter';
 import Align from '../classes/util/align';
 import AlignGrid from '../classes/util/alignGrid';
 import FlatButton from '../classes/ui/flatButton';
-import Controller from '../classes/mc/controller';
+import Controller from '../classes/modelAndController/controller';
 import SoundButtons from '../classes/ui/soundButtons';
 import MediaManager from '../classes/util/mediaManager';
 

@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import Model from '../mc/model';
+import Model from '../modelAndController/model';
 import ToggleButton from './toggleButton';
 import Constants from '../../constants';
 
@@ -33,8 +33,8 @@ class SoundButtons extends Phaser.GameObjects.Container {
     this.sfxButton.x = config.scene.game.config.width - this.sfxButton.width / 2;
     this.sfxButton.y = this.musicButton.y;
 
-    this.musicButton.setScrollFactor(0);
-    this.sfxButton.setScrollFactor(0);
+    this.musicButton.setNoScroll();
+    this.sfxButton.setNoScroll();
 
     if (Model.musicOn === true) {
       this.musicButton.toggle();

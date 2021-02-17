@@ -3,7 +3,7 @@ import Align from '../classes/util/align';
 import AlignGrid from '../classes/util/alignGrid';
 import FlatButton from '../classes/ui/flatButton';
 import EventEmitter from '../classes/util/eventEmitter';
-import Model from '../classes/mc/model';
+import Model from '../classes/modelAndController/model';
 
 class SceneOver extends Phaser.Scene {
   constructor() {

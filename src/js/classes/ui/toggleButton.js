@@ -43,6 +43,12 @@ class ToggleButton extends Phaser.GameObjects.Container {
     this.scene.add.existing(this);
   }
 
+  setNoScroll() {
+    this.back.setScrollFactor(0);
+    this.onIcon.setScrollFactor(0);
+    this.offIcon.setScrollFactor(0);
+  }
+
   toggle() {
     this.value = !this.value;
     this.setIcons();
