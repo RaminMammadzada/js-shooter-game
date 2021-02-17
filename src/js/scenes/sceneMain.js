@@ -24,12 +24,7 @@ class SceneMain extends Phaser.Scene {
     Controller.setEmitters();
     // console.log(this);
     const mediaManager = new MediaManager({ scene: this });
-
     mediaManager.setBackgroundMusic('backgroundMusic');
-
-    const sb = new SoundButtons({ scene: this });
-    sb.depth = 1;
-    sb.setScrollFactor(0);
 
     this.playerPower = 5;
     this.enemyPower = 5;
@@ -107,6 +102,8 @@ class SceneMain extends Phaser.Scene {
 
     this.showInfo();
     this.setColliders();
+
+    const soundButtons = new SoundButtons({ scene: this });
   }
 
   setColliders() {
@@ -156,6 +153,7 @@ class SceneMain extends Phaser.Scene {
   destroyRock(bullet, rock) {
     const explosion = this.add.sprite(rock.x, rock.y, 'exp');
     explosion.play('boom');
+    EventEmitter.emit(Constants.PLAY_SOUND, 'explode');
     rock.destroy();
     if (bullet !== null) {
       bullet.destroy();
@@ -165,6 +163,7 @@ class SceneMain extends Phaser.Scene {
   damageEnemyShip(enemyShip, playerBullet) {
     const explosion = this.add.sprite(playerBullet.x, playerBullet.y, 'exp');
     explosion.play('boom');
+    EventEmitter.emit(Constants.PLAY_SOUND, 'explode');
     console.log('player gives damage to enemy ship');
     playerBullet.destroy();
 
@@ -178,6 +177,7 @@ class SceneMain extends Phaser.Scene {
   damagePlayerShip(playerShip, enemyBullet) {
     const explosion = this.add.sprite(playerShip.x, playerShip.y, 'exp');
     explosion.play('boom');
+    EventEmitter.emit(Constants.PLAY_SOUND, 'explode');
     console.log('enemy gives damage to player ship');
     enemyBullet.destroy();
     this.decreasePlayerPower();
@@ -228,6 +228,7 @@ class SceneMain extends Phaser.Scene {
     this.playerBulletGroup.add(bullet);
     bullet.angle = this.playerShip.angle;
     bullet.body.setVelocity(directionObj.tx * 100, directionObj.ty * 100);
+    EventEmitter.emit(Constants.PLAY_SOUND, 'playerShoot');
   }
 
   fireBulletForEnemyShip() {
@@ -240,6 +241,7 @@ class SceneMain extends Phaser.Scene {
     this.enemyBulletGroup.add(enemyBullet);
     enemyBullet.body.angularVelocity = 10;
     this.physics.moveTo(enemyBullet, this.playerShip.x, this.playerShip.y, 100);
+    EventEmitter.emit(Constants.PLAY_SOUND, 'playerShoot');
   }
 
   toDegrees(angle) {
@@ -322,7 +324,7 @@ class SceneMain extends Phaser.Scene {
       const distanceX = Math.abs(this.playerShip.x - this.tx);
       const distanceY = Math.abs(this.playerShip.y - this.ty);
       if (distanceX < 10 && distanceY < 10) {
-        if (this.ship.body) {
+        if (this.playerShip.body) {
           this.playerShip.body.setVelocity(0, 0);
         }
       }

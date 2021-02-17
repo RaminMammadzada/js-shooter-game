@@ -14,26 +14,29 @@ class SceneOver extends Phaser.Scene {
     // this.load.image("title", "images/title.png");
   }
   create() {
+    this.add.image(0, 0, 'background').setOrigin(0.5, 0.5);
     this.alignGrid = new AlignGrid({ rows: 11, cols: 11, scene: this });
-    this.alignGrid.showNumbers();
+    // this.alignGrid.showNumbers();
 
     let title = this.add.image(0, 0, 'title');
     Align.scaleToGameW(title, 0.8, this.game);
     this.alignGrid.placeAtIndex(16, title);
 
-    this.winnerText = this.add.text(0, 0, 'WINNER', { fontSize: this.game.config.width / 10, color: '#3FE213' });
+    this.winnerText = this.add.text(0, 0, 'WINNER IS', { fontSize: this.game.config.width / 10, color: '#C73B2C' });
     this.winnerText.setOrigin(0.5, 0.5);
     this.alignGrid.placeAtIndex(38, this.winnerText);
 
     if (Model.playerWon === true) {
       this.winner = this.add.image(0, 0, 'playerShip');
+      this.winnerText.setText('YOU WON');
     } else {
-      this.winner = this.add.image(0, 0, 'enemyShip')
+      this.winner = this.add.image(0, 0, 'enemyShip');
+      this.winnerText.setText('THE ENEMY WON');
     }
 
     Align.scaleToGameW(this.winner, 0.25, this.game);
     this.winner.angle = 270;
-    this.alignGrid.placeAtIndex(49, this.winner);
+    this.alignGrid.placeAtIndex(71, this.winner);
 
     let btnStart = new FlatButton({ scene: this, key: 'button1', text: 'Play Again!', event: 'start_game' })
     this.alignGrid.placeAtIndex(104, btnStart);

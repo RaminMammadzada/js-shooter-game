@@ -16,6 +16,12 @@ import Bar from '../classes/comps/bar';
 // import button2 from '../../images/ui/buttons/2/5.png';
 import backgroundMusic1 from '../../audio/background.mp3';
 import backgroundMusic2 from '../../audio/background.ogg';
+import explode1 from '../../audio/explode.wav';
+import explode2 from '../../audio/explode.ogg';
+import playerShoot1 from '../../audio/playerShoot.wav';
+import playerShoot2 from '../../audio/playerShoot.ogg';
+import enemyShoot1 from '../../audio/enemyShoot.wav';
+import enemyShoot2 from '../../audio/enemyShoot.ogg';
 
 class SceneLoad extends Phaser.Scene {
   constructor() {
@@ -37,7 +43,9 @@ class SceneLoad extends Phaser.Scene {
     this.progText.setOrigin(0.5, 0.5);
     this.load.on('progress', this.onProgress, this);
 
-    // this.load.audio("cat", ["audio/meow.mp3", "audio/meow.ogg"]);
+    this.load.audio('explode', [explode1, explode2]);
+    this.load.audio('playerShoot', [playerShoot1, playerShoot2]);
+    this.load.audio('enemyShoot', [enemyShoot1, enemyShoot2]);
     this.load.audio('backgroundMusic', [backgroundMusic1, backgroundMusic2]);
 
     // load our images or sounds
