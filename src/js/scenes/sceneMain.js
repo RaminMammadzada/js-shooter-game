@@ -20,7 +20,6 @@ class SceneMain extends Phaser.Scene {
   create() {
     // define our object
     // define our object
-
     Controller.setEmitters();
     // console.log(this);
     const mediaManager = new MediaManager({ scene: this });

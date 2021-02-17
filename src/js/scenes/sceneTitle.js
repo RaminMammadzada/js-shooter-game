@@ -8,6 +8,7 @@ import FlatButton from '../classes/ui/flatButton';
 import Controller from '../classes/modelAndController/controller';
 import SoundButtons from '../classes/ui/soundButtons';
 import MediaManager from '../classes/util/mediaManager';
+import Model from '../classes/modelAndController/model';
 
 class SceneTitle extends Phaser.Scene {
   constructor() {
@@ -43,25 +44,49 @@ class SceneTitle extends Phaser.Scene {
     playerIcon.flipX = true;
     enemyIcon.angle = 180;
 
-    const btnStart = new FlatButton({
+    this.textField = this.add.text(0, 0, 'write your name here', { fixedWidth: this.game.config.width / 2.2, fixedHeight: this.game.config.height / 20, backgroundColor: '#0A0A0A' });
+    this.textField.setOrigin(0.5, 0.5);
+    this.alignGrid.placeAtIndex(104, this.textField);
+    this.elem = '';
+    this.textField.setInteractive().on('pointerdown', () => {
+      const editor = this.rexUI.edit(this.textField);
+      this.elem = editor.inputText.node;
+      this.elem.placeholder = 'write your name here';
+      this.elem.autofocus = true;
+      this.elem.value = '';
+    });
+
+    this.btnStart = new FlatButton({
       scene: this,
       key: 'button1',
       text: 'start',
       event: 'start_game',
     });
-    this.alignGrid.placeAtIndex(104, btnStart);
+    this.alignGrid.placeAtIndex(115, this.btnStart);
+
+    this.btnStart.visible = false;
 
     EventEmitter.on('start_game', this.startGame, this);
-    // this.scene.start('SceneMain');
 
     const soundButtons = new SoundButtons({ scene: this });
+    soundButtons.depth = 1;
   }
 
   startGame() {
     this.scene.start('SceneMain');
   }
 
-  update() { }
+  update() {
+    if (this.elem !== '') {
+      if (this.elem.value !== '') {
+        Model.username = this.elem.value;
+        this.btnStart.visible = true;
+      } else {
+        Model.username = this.elem.value;
+        this.btnStart.visible = false;
+      }
+    }
+  }
 }
 
 export default SceneTitle;
