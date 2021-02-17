@@ -1,11 +1,44 @@
 import Phaser from 'phaser';
+import Align from '../classes/util/align';
+import AlignGrid from '../classes/util/alignGrid';
+import FlatButton from '../classes/ui/flatButton';
+import EventEmitter from '../classes/util/eventEmitter';
+import Model from '../classes/mc/model';
 
 class SceneOver extends Phaser.Scene {
   constructor() {
     super('SceneOver');
   }
   preload() {
+    // this.load.image("button1", "images/ui/buttons/2/1.png")
+    // this.load.image("title", "images/title.png");
+  }
+  create() {
+    this.alignGrid = new AlignGrid({ rows: 11, cols: 11, scene: this });
+    this.alignGrid.showNumbers();
 
+    let title = this.add.image(0, 0, 'title');
+    Align.scaleToGameW(title, 0.8, this.game);
+    this.alignGrid.placeAtIndex(16, title);
+
+    this.winnerText = this.add.text(0, 0, 'WINNER', { fontSize: this.game.config.width / 10, color: '#3FE213' });
+    this.winnerText.setOrigin(0.5, 0.5);
+    this.alignGrid.placeAtIndex(38, this.winnerText);
+
+    if (Model.playerWon === true) {
+      this.winner = this.add.image(0, 0, 'playerShip');
+    } else {
+      this.winner = this.add.image(0, 0, 'enemyShip')
+    }
+
+    Align.scaleToGameW(this.winner, 0.25, this.game);
+    this.winner.angle = 270;
+    this.alignGrid.placeAtIndex(49, this.winner);
+
+    let btnStart = new FlatButton({ scene: this, key: 'button1', text: 'Play Again!', event: 'start_game' })
+    this.alignGrid.placeAtIndex(104, btnStart);
+
+    EventEmitter.on('start_game', this.startGame, this);
   }
   startGame() {
     this.scene.start('SceneMain');

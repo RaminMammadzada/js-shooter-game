@@ -6,6 +6,8 @@ import Controller from '../classes/mc/controller';
 import Align from '../classes/util/align';
 import AlignGrid from '../classes/util/alignGrid';
 import Constants from '../constants';
+import Model from '../classes/mc/model'
+import { Modal } from 'bootstrap';
 
 class SceneMain extends Phaser.Scene {
   constructor() {
@@ -29,15 +31,16 @@ class SceneMain extends Phaser.Scene {
     sb.depth = 1;
     sb.setScrollFactor(0);
 
-    this.playerPower = 100;
-    this.enemyPower = 100;
+    this.playerPower = 5;
+    this.enemyPower = 5;
+    Modal.playerWon = true;
 
     this.centerX = this.game.config.width / 2;
     this.center = this.game.config.height / 2;
 
     this.background = this.add.image(0, 0, 'background');
     this.background.setOrigin(0, 0);
-    this.playerShip = this.physics.add.sprite(this.centerX, this.centerY, 'ship');
+    this.playerShip = this.physics.add.sprite(this.centerX, this.centerY, 'playerShip');
     Align.scaleToGameW(this.playerShip, 0.125, this.game);
     this.playerShip.body.collideWorldBounds = true;
     this.playerShip.setInteractive();
@@ -125,11 +128,19 @@ class SceneMain extends Phaser.Scene {
   decreasePlayerPower() {
     this.playerPower -= 1;
     this.playerPowerText.setText(`Player Power\n ${this.playerPower}`);
+    if (this.playerPower === 0) {
+      Model.playerWon = false;
+      this.scene.start('SceneOver');
+    }
   }
 
   decreaseEnemyPower() {
     this.enemyPower -= 1;
     this.enemyPowerText.setText(`Enemy Power\n ${this.enemyPower}`);
+    if (this.enemyPower === 0) {
+      Model.playerWon = true;
+      this.scene.start('SceneOver');
+    }
   }
 
   rockHitPlayerShip(playerShip, rock) {
@@ -254,7 +265,7 @@ class SceneMain extends Phaser.Scene {
     this.uiGrid.placeAtIndex(3, this.playerPowerText);
     this.uiGrid.placeAtIndex(9, this.enemyPowerText);
 
-    this.icon1 = this.add.image(0, 0, 'ship');
+    this.icon1 = this.add.image(0, 0, 'playerShip');
     this.icon2 = this.add.image(0, 0, 'enemyShip');
     Align.scaleToGameW(this.icon1, 0.05, this.game);
     Align.scaleToGameW(this.icon2, 0.05, this.game);
@@ -306,20 +317,25 @@ class SceneMain extends Phaser.Scene {
 
   update() {
     // constant running loop
-    const distanceX = Math.abs(this.playerShip.x - this.tx);
-    const distanceY = Math.abs(this.playerShip.y - this.ty);
-    if (distanceX < 10 && distanceY < 10) {
-      this.playerShip.body.setVelocity(0, 0);
-    }
 
-    const distanceX2 = Math.abs(this.playerShip.x - this.enemyShip.x);
-    const distanceY2 = Math.abs(this.playerShip.y - this.enemyShip.y);
-    if (distanceX2 < this.game.config.width / 3 && distanceY2 < this.game.config.height / 3) {
-      this.fireBulletForEnemyShip();
-    }
+    if (this.playerShip && this.enemyShip) {
+      const distanceX = Math.abs(this.playerShip.x - this.tx);
+      const distanceY = Math.abs(this.playerShip.y - this.ty);
+      if (distanceX < 10 && distanceY < 10) {
+        if (this.ship.body) {
+          this.playerShip.body.setVelocity(0, 0);
+        }
+      }
 
-    if (this.keySpace.isDown) {
-      this.fireBulletForPlayerShip();
+      const distanceX2 = Math.abs(this.playerShip.x - this.enemyShip.x);
+      const distanceY2 = Math.abs(this.playerShip.y - this.enemyShip.y);
+      if (distanceX2 < this.game.config.width / 3 && distanceY2 < this.game.config.height / 3) {
+        this.fireBulletForEnemyShip();
+      }
+
+      if (this.keySpace.isDown) {
+        this.fireBulletForPlayerShip();
+      }
     }
   }
 }

@@ -4,7 +4,7 @@ import sfxOff from '../../images/ui/icons/sfx_off.png';
 import sfxOn from '../../images/ui/icons/sfx_on.png';
 import musicOn from '../../images/ui/icons/music_on.png';
 import musicOff from '../../images/ui/icons/music_off.png';
-import player from '../../images/player.png';
+import playerShip from '../../images/player.png';
 import backgroundImage from '../../images/background.jpg';
 import rocks from '../../images/rocks.png';
 import bullet from '../../images/bullet.png';
@@ -50,7 +50,7 @@ class SceneLoad extends Phaser.Scene {
     this.load.image('musicOn', musicOn);
     this.load.image('musicOff', musicOff);
 
-    this.load.image('ship', player);
+    this.load.image('playerShip', playerShip);
     this.load.image('background', backgroundImage);
 
     this.load.spritesheet('rocks', rocks, { frameWidth: 125, frameHeight: 100 });
