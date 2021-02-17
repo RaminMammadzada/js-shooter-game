@@ -11,6 +11,7 @@ import bullet from '../../images/bullet.png';
 import enemyBullet from '../../images/enemyBullet.png';
 import exp from '../../images/exp.png';
 import enemyShip from '../../images/enemy.png';
+import target from '../../images/target.png';
 import Bar from '../classes/comps/bar';
 // import button1 from '../../images/ui/buttons/2/1.png';
 // import button2 from '../../images/ui/buttons/2/5.png';
@@ -66,6 +67,7 @@ class SceneLoad extends Phaser.Scene {
     this.load.image('bullet', bullet);
     this.load.image('enemyBullet', enemyBullet);
     this.load.image('enemyShip', enemyShip);
+    this.load.image('target', target);
   }
 
   onProgress(value) {

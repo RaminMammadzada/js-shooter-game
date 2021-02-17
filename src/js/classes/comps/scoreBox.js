@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import EventEmitter from '../util/eventEmitter';
-import Model from '../mc/model';
+import Model from '../modelAndController/model';
 import Constants from '../../constants';
 
 class ScoreBox extends Phaser.GameObjects.Container {

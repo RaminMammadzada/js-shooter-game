@@ -39,7 +39,7 @@ class SceneTitle extends Phaser.Scene {
     Align.scaleToGameW(enemyIcon, 0.35, this.game);
     this.alignGrid.placeAtIndex(69, playerIcon);
     this.alignGrid.placeAtIndex(73, enemyIcon);
-    playerIcon.angle = 180;
+    playerIcon.angle = 90;
     playerIcon.flipX = true;
     enemyIcon.angle = 180;
 

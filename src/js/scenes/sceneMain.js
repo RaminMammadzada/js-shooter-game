@@ -6,8 +6,7 @@ import Controller from '../classes/modelAndController/controller';
 import Align from '../classes/util/align';
 import AlignGrid from '../classes/util/alignGrid';
 import Constants from '../constants';
-import Model from '../classes/modelAndController/model'
-import { Modal } from 'bootstrap';
+import Model from '../classes/modelAndController/model';
 
 class SceneMain extends Phaser.Scene {
   constructor() {
@@ -28,7 +27,7 @@ class SceneMain extends Phaser.Scene {
 
     this.playerPower = 30;
     this.enemyPower = 30;
-    Modal.playerWon = true;
+    Model.playerWon = true;
 
     this.centerX = this.game.config.width / 2;
     this.center = this.game.config.height / 2;
@@ -36,6 +35,7 @@ class SceneMain extends Phaser.Scene {
     this.background = this.add.image(0, 0, 'background');
     this.background.setOrigin(0, 0);
     this.playerShip = this.physics.add.sprite(this.centerX, this.centerY, 'playerShip');
+    this.playerShip.setOrigin(0.5, 0.5);
     Align.scaleToGameW(this.playerShip, 0.125, this.game);
     this.playerShip.body.collideWorldBounds = true;
     this.playerShip.setInteractive();
@@ -76,11 +76,18 @@ class SceneMain extends Phaser.Scene {
     this.setColliders();
 
     const soundButtons = new SoundButtons({ scene: this });
+    // soundButtons.depth = 1;
+
+    if (!Model.isMobile) {
+      this.target = this.add.image(0, 0, 'target');
+      Align.scaleToGameW(this.target, 0.08, this.game);
+    }
   }
 
   setColliders() {
     this.physics.add.collider(this.playerBulletGroup, this.enemyShip, this.damageEnemyShip, null, this);
     this.physics.add.collider(this.enemyBulletGroup, this.playerShip, this.damagePlayerShip, null, this);
+    this.physics.add.collider(this.enemyBulletGroup, this.playerBulletGroup, this.destroyBullets, null, this);
   }
 
   setRockColliders() {
@@ -95,6 +102,15 @@ class SceneMain extends Phaser.Scene {
     const frameNamesSliced = frameNames.slice();
     frameNamesSliced.reverse();
     return frameNamesSliced.concat(frameNames);
+  }
+
+  destroyBullets(playerBullet, enemyBullet) {
+    const explosion = this.add.sprite(playerBullet.x, playerBullet.y, 'exp');
+    explosion.play('boom');
+    EventEmitter.emit(Constants.PLAY_SOUND, 'explode');
+    console.log('player and enemy bullets collided');
+    playerBullet.destroy();
+    enemyBullet.destroy();
   }
 
   decreasePlayerPower() {
@@ -176,9 +192,12 @@ class SceneMain extends Phaser.Scene {
     const ty = this.background.input.localY;
     this.tx = tx;
     this.ty = ty;
-    let angle = this.physics.moveTo(this.playerShip, tx, ty, 250);
-    angle = this.toDegrees(angle);
-    this.playerShip.angle = angle;
+    let angle = this.physics.moveTo(this.playerShip, tx, ty, 150);
+
+    if (Model.isMobile) {
+      angle = this.toDegrees(angle);
+      this.playerShip.angle = angle + 90;
+    }
     console.log(this.playerShip.angle);
 
     const distanceX2 = Math.abs(this.playerShip.x - this.tx);
@@ -191,6 +210,19 @@ class SceneMain extends Phaser.Scene {
     //   } else {
     //   this.fireBulletForPlayerShip();
     // }
+
+  }
+
+  setTargetIconLocation() {
+    if (this.target) {
+      this.target.setPosition(this.game.input.mousePointer.worldX, this.game.input.mousePointer.worldY);
+    }
+  }
+
+  rotatePlayer() {
+    const rotate = Phaser.Math.Angle.Between(this.playerShip.body.x, this.playerShip.body.y, this.game.input.mousePointer.worldX, this.game.input.mousePointer.worldY);
+    const angle = rotate + Math.PI / 2;
+    this.playerShip.rotation = angle;
   }
 
   fireBulletForPlayerShip() {
@@ -199,11 +231,13 @@ class SceneMain extends Phaser.Scene {
       return;
     }
     this.lastTimePlayerBulletFired = this.getTimer();
-    const directionObj = this.getDirectionFromAngle(this.playerShip.angle);
-    const bullet = this.physics.add.sprite(this.playerShip.x + directionObj.tx * 30, this.playerShip.y + directionObj.ty + 30, 'bullet');
+    const directionObj = this.getDirectionFromAngle(this.playerShip.angle - 90);
+    console.log("Player ship angle: ", this.playerShip.angle);
+    const bullet = this.physics.add.sprite(this.playerShip.x + directionObj.tx, this.playerShip.y + directionObj.ty, 'bullet');
+    bullet.setOrigin(0.5, 0.5);
     this.playerBulletGroup.add(bullet);
-    bullet.angle = this.playerShip.angle;
-    bullet.body.setVelocity(directionObj.tx * 100, directionObj.ty * 100);
+    bullet.angle = this.playerShip.angle - 90;
+    bullet.body.setVelocity(directionObj.tx * 200, directionObj.ty * 200);
     EventEmitter.emit(Constants.PLAY_SOUND, 'playerShoot');
   }
 
@@ -249,8 +283,8 @@ class SceneMain extends Phaser.Scene {
     Align.scaleToGameW(this.icon2, 0.05, this.game);
     this.uiGrid.placeAtIndex(1, this.icon1);
     this.uiGrid.placeAtIndex(7, this.icon2);
+    this.icon1.angle = 0;
     this.icon2.angle = 270;
-    this.icon1.angle = 270;
 
     this.playerPowerText.setScrollFactor(0);
     this.enemyPowerText.setScrollFactor(0);
@@ -315,6 +349,11 @@ class SceneMain extends Phaser.Scene {
       if (this.keySpace.isDown) {
         this.fireBulletForPlayerShip();
       }
+    }
+
+    if (!Model.isMobile) {
+      this.rotatePlayer();
+      this.setTargetIconLocation();
     }
   }
 }
