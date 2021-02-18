@@ -4,6 +4,7 @@ import SceneBoot from './scenes/sceneBoot';
 import SceneTitle from './scenes/sceneTitle';
 import SceneMain from './scenes/sceneMain';
 import ScenePreloader from './scenes/scenePreloader';
+import SceneLeaderboard from './scenes/sceneLeaderboard';
 import Model from './classes/modelAndController/model';
 
 class Game extends Phaser.Game {
@@ -26,7 +27,7 @@ class Game extends Phaser.Game {
             debug: false,
           },
         },
-        scene: [ScenePreloader, SceneTitle, SceneMain, SceneBoot],
+        scene: [ScenePreloader, SceneTitle, SceneMain, SceneBoot, SceneLeaderboard],
         dom: {
           createContainer: true,
         },
@@ -52,7 +53,7 @@ class Game extends Phaser.Game {
             debug: false,
           },
         },
-        scene: [ScenePreloader, SceneTitle, SceneMain, SceneBoot],
+        scene: [ScenePreloader, SceneTitle, SceneMain, SceneBoot, SceneLeaderboard],
         dom: {
           createContainer: true,
         },

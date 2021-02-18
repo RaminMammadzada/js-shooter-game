@@ -56,15 +56,15 @@ class SceneTitle extends Phaser.Scene {
       this.elem.value = '';
     });
 
-    this.btnStart = new FlatButton({
+    this.buttonStart = new FlatButton({
       scene: this,
       key: 'button1',
       text: 'start',
       event: 'start_game',
     });
-    this.alignGrid.placeAtIndex(115, this.btnStart);
+    this.alignGrid.placeAtIndex(115, this.buttonStart);
 
-    this.btnStart.visible = false;
+    this.buttonStart.visible = false;
 
     EventEmitter.on('start_game', this.startGame, this);
 
@@ -81,10 +81,10 @@ class SceneTitle extends Phaser.Scene {
     if (this.elem !== '') {
       if (this.elem.value !== '') {
         Model.username = this.elem.value;
-        this.btnStart.visible = true;
+        this.buttonStart.visible = true;
       } else {
         Model.username = this.elem.value;
-        this.btnStart.visible = false;
+        this.buttonStart.visible = false;
       }
     }
   }

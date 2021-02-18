@@ -8,6 +8,7 @@ import AlignGrid from '../classes/util/alignGrid';
 import Constants from '../constants';
 import Model from '../classes/modelAndController/model';
 import ScoreBox from '../classes/comps/scoreBox';
+import { postScore } from '../classes/util/serviceApi';
 
 class SceneMain extends Phaser.Scene {
   constructor() {
@@ -87,6 +88,7 @@ class SceneMain extends Phaser.Scene {
   setColliders() {
     this.physics.add.collider(this.playerBulletGroup, this.enemyShip, this.damageEnemyShip, this.increaseScore, this);
     this.physics.add.collider(this.enemyBulletGroup, this.playerShip, this.damagePlayerShip, null, this);
+    this.physics.add.collider(this.enemyShip, this.playerShip, null, null, this);
     this.physics.add.collider(this.enemyBulletGroup, this.playerBulletGroup, this.destroyBullets, this.increaseScore, this);
   }
 
@@ -123,6 +125,7 @@ class SceneMain extends Phaser.Scene {
     this.playerPowerText.setText(`Player Power\n ${this.playerPower}`);
     if (this.playerPower === 0) {
       Model.playerWon = false;
+      postScore(Model.username, Model.score);
       this.scene.start('SceneBoot');
     }
   }
@@ -132,6 +135,7 @@ class SceneMain extends Phaser.Scene {
     this.enemyPowerText.setText(`Enemy Power\n ${this.enemyPower}`);
     if (this.enemyPower === 0) {
       Model.playerWon = true;
+      postScore(Model.username, Model.score);
       this.scene.start('SceneBoot');
     }
   }

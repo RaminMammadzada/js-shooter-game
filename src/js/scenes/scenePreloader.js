@@ -79,6 +79,7 @@ class ScenePreloader extends Phaser.Scene {
 
   create() {
     this.scene.start('SceneTitle');
+    // this.scene.start('SceneLeaderboard');
   }
 }
 
