@@ -74,6 +74,7 @@ class SceneTitle extends Phaser.Scene {
 
   startGame() {
     this.scene.start('SceneMain');
+    // this.scene.start('SceneLeaderboard');
   }
 
   update() {

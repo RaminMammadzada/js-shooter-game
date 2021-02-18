@@ -1,9 +1,9 @@
 import Phaser from 'phaser';
 import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin';
-import SceneLoad from './scenes/sceneLoad';
+import SceneBoot from './scenes/sceneBoot';
 import SceneTitle from './scenes/sceneTitle';
-import SceneMain from './scenes/SceneMain';
-import SceneOver from './scenes/SceneOver';
+import SceneMain from './scenes/sceneMain';
+import ScenePreloader from './scenes/scenePreloader';
 import Model from './classes/modelAndController/model';
 
 class Game extends Phaser.Game {
@@ -26,7 +26,7 @@ class Game extends Phaser.Game {
             debug: false,
           },
         },
-        scene: [SceneLoad, SceneTitle, SceneMain, SceneOver],
+        scene: [ScenePreloader, SceneTitle, SceneMain, SceneBoot],
         dom: {
           createContainer: true,
         },
@@ -52,7 +52,7 @@ class Game extends Phaser.Game {
             debug: false,
           },
         },
-        scene: [SceneLoad, SceneTitle, SceneMain, SceneOver],
+        scene: [ScenePreloader, SceneTitle, SceneMain, SceneBoot],
         dom: {
           createContainer: true,
         },

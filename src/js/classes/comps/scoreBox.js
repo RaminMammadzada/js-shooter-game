@@ -19,6 +19,10 @@ class ScoreBox extends Phaser.GameObjects.Container {
   }
 
   scoreUpdated() {
+    console.log('here it is');
+    console.log(this.text1);
+    console.log('Model.score: ', Model.score);
+    this.text1.setSize(49);
     this.text1.setText(`SCORE:\n${Model.score}`);
   }
 }

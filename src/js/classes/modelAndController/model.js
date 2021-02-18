@@ -19,7 +19,7 @@ class Model {
 
   set score(val) {
     this._score = val;
-    console.log("Score upadted!");
+    console.log("Score updated!");
     EventEmitter.emit(Constants.SCORE_UPDATED);
   }
 

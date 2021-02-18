@@ -94,8 +94,8 @@ class SceneMain extends Phaser.Scene {
     this.physics.add.collider(this.rockGroup);
     this.physics.add.collider(this.rockGroup, this.playerShip, this.rockHitPlayerShip, null, this);
     this.physics.add.collider(this.rockGroup, this.enemyShip, this.rockHitEnemyShip, null, this);
-    this.physics.add.collider(this.playerBulletGroup, this.rockGroup, this.destroyRock, this.increaseScore, this);
-    this.physics.add.collider(this.enemyBulletGroup, this.rockGroup, this.destroyRock, null, this);
+    this.physics.add.collider(this.rockGroup, this.playerBulletGroup, this.destroyRock, this.increaseScore, this);
+    this.physics.add.collider(this.rockGroup, this.enemyBulletGroup, this.destroyRock, null, this);
   }
 
   updateFrameNames(frameNames) {
@@ -123,7 +123,7 @@ class SceneMain extends Phaser.Scene {
     this.playerPowerText.setText(`Player Power\n ${this.playerPower}`);
     if (this.playerPower === 0) {
       Model.playerWon = false;
-      this.scene.start('SceneOver');
+      this.scene.start('SceneBoot');
     }
   }
 
@@ -132,14 +132,13 @@ class SceneMain extends Phaser.Scene {
     this.enemyPowerText.setText(`Enemy Power\n ${this.enemyPower}`);
     if (this.enemyPower === 0) {
       Model.playerWon = true;
-      this.scene.start('SceneOver');
+      this.scene.start('SceneBoot');
     }
   }
 
   rockHitPlayerShip(playerShip, rock) {
     this.destroyRock(null, rock);
     this.decreasePlayerPower();
-    EventEmitter.emit(Constants.PLAY_SOUND, 'explode');
   }
 
   rockHitEnemyShip(enemyShip, rock) {
@@ -149,6 +148,7 @@ class SceneMain extends Phaser.Scene {
 
   destroyRock(bullet, rock) {
     const explosion = this.add.sprite(rock.x, rock.y, 'exp');
+    EventEmitter.emit(Constants.PLAY_SOUND, 'explode');
     explosion.play('boom');
     rock.destroy();
     if (bullet !== null) {
@@ -273,8 +273,8 @@ class SceneMain extends Phaser.Scene {
   }
 
   showInfo() {
-    this.playerPowerText = this.add.text(0, 0, 'Player power\n100', { fontSize: this.game.config.width / 30, align: 'center' });
-    this.enemyPowerText = this.add.text(0, 0, 'Enemy power\n100', { fontSize: this.game.config.width / 30, align: 'center' });
+    this.playerPowerText = this.add.text(0, 0, 'Player power\n30', { fontSize: this.game.config.width / 30, align: 'center' });
+    this.enemyPowerText = this.add.text(0, 0, 'Enemy power\n30', { fontSize: this.game.config.width / 30, align: 'center' });
 
     this.playerPowerText.setOrigin(0.5, 0.5);
     this.enemyPowerText.setOrigin(0.5, 0.5);

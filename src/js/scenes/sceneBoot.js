@@ -5,9 +5,9 @@ import FlatButton from '../classes/ui/flatButton';
 import EventEmitter from '../classes/util/eventEmitter';
 import Model from '../classes/modelAndController/model';
 
-class SceneOver extends Phaser.Scene {
+class SceneBoot extends Phaser.Scene {
   constructor() {
-    super('SceneOver');
+    super('SceneBoot');
   }
   preload() {
     // this.load.image("button1", "images/ui/buttons/2/1.png")
@@ -35,7 +35,7 @@ class SceneOver extends Phaser.Scene {
     }
 
     Align.scaleToGameW(this.winner, 0.25, this.game);
-    this.winner.angle = 270;
+    this.winner.angle = 0;
     this.alignGrid.placeAtIndex(71, this.winner);
 
     let btnStart = new FlatButton({ scene: this, key: 'button1', text: 'Play Again!', event: 'start_game' })
@@ -44,9 +44,9 @@ class SceneOver extends Phaser.Scene {
     EventEmitter.on('start_game', this.startGame, this);
   }
   startGame() {
-    this.scene.start('SceneMain');
+    location.reload();
   }
   update() { }
 }
 
-export default SceneOver;
+export default SceneBoot;

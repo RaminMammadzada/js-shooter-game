@@ -24,9 +24,9 @@ import playerShoot2 from '../../audio/playerShoot.ogg';
 import enemyShoot1 from '../../audio/enemyShoot.wav';
 import enemyShoot2 from '../../audio/enemyShoot.ogg';
 
-class SceneLoad extends Phaser.Scene {
+class ScenePreloader extends Phaser.Scene {
   constructor() {
-    super('SceneLoad');
+    super('ScenePreloader');
   }
 
   preload() {
@@ -82,4 +82,4 @@ class SceneLoad extends Phaser.Scene {
   }
 }
 
-export default SceneLoad;
+export default ScenePreloader;
