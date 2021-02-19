@@ -17,7 +17,8 @@
     "test": "jest",
     "test-watch": "jest --watch *.js",
     "build": "webpack --config webpack.config.js ",
-    "dev": "node_modules/.bin/webpack serve --mode=development --watch --hot"
+    "dev": "node_modules/.bin/webpack serve --mode=development --watch --hot",
+    "start": "node_modules/.bin/webpack serve"
   },
   "author": "",
   "license": "ISC",
