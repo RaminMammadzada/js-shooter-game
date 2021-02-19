@@ -31,7 +31,7 @@
     <img src="./docs/logos/jest.png" alt="" height="40"/>
   </p>
 
-  <h3 align="center">Rogue Tanks: Shooter Game</h3>
+  <h3 align="center">Cosmos Wars: Shooter Game</h3>
 
   <p align="center">
     A shooter game developed with phaser 3.5 game development framework
