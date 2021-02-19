@@ -6,4 +6,4 @@ class EventEmitter extends Phaser.Events.EventEmitter {
   }
 }
 
-export default new EventEmitter();
+export default (new EventEmitter());

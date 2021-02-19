@@ -1,3 +1,5 @@
+import 'regenerator-runtime/runtime'
+
 const baseUrl = () => {
   return 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/';
 };
