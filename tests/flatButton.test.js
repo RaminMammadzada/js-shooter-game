@@ -8,4 +8,3 @@ test('FlatButton is defined when it is initiated', () => {
 test('FlatButton is subclass of Phaser.GameObjects.Container', () => {
   expect(FlatButton).toBeSubclassOf(Phaser.GameObjects.Container);
 });
-

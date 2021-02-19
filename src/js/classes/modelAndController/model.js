@@ -3,28 +3,27 @@ import Constants from '../../constants';
 
 class Model {
   constructor() {
-    this._score = 0;
+    this.a_score = 0;
     this.soundOn = true;
-    this._musicOn = true;
+    this.a_musicOn = true;
   }
 
   set musicOn(val) {
-    this._musicOn = val;
+    this.a_musicOn = val;
     EventEmitter.emit(Constants.MUSIC_CHANGED);
   }
 
   get musicOn() {
-    return this._musicOn;
+    return this.a_musicOn;
   }
 
   set score(val) {
-    this._score = val;
-    console.log("Score updated!");
+    this.a_score = val;
     EventEmitter.emit(Constants.SCORE_UPDATED);
   }
 
   get score() {
-    return this._score;
+    return this.a_score;
   }
 }
 

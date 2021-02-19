@@ -3,6 +3,10 @@ import Model from './model';
 import Constants from '../../constants';
 
 class Controller {
+  constructor() {
+    this.setEmitters();
+  }
+
   setEmitters() {
     EventEmitter.on(Constants.SET_SCORE, this.setScore);
     EventEmitter.on(Constants.UP_POINTS, this.upPoints);
@@ -11,20 +15,24 @@ class Controller {
   }
 
   toggleSound(val) {
-    Model.soundOn = val;
+    this.val = val;
+    Model.soundOn = this.val;
   }
 
   toggleMusic(val) {
-    Model.musicOn = val;
+    this.val = val;
+    Model.musicOn = this.val;
   }
 
   setScore(score) {
-    Model.score = score;
+    this.score = score;
+    Model.score = this.score;
   }
 
   upPoints(points) {
+    this.points = points;
     let { score } = Model;
-    score += points;
+    score += this.points;
     Model.score = score;
   }
 }

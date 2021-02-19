@@ -2,7 +2,6 @@ class AlignGrid {
   constructor(config) {
     this.config = config;
     if (!config.scene) {
-      console.log("missing scene");
       return;
     }
     if (!config.rows) {
@@ -43,17 +42,16 @@ class AlignGrid {
 
   placeAt(xx, yy, obj) {
     // calc position basedd upon the cellwidth and cellheight
-    let x2 = this.cw * xx + this.cw / 2;
-    let y2 = this.ch * yy + this.ch / 2;
+    const x2 = this.cw * xx + this.cw / 2;
+    const y2 = this.ch * yy + this.ch / 2;
 
     obj.x = x2;
     obj.y = y2;
   }
 
   placeAtIndex(index, obj) {
-
-    let yy = Math.floor(index / this.config.cols);
-    let xx = index - (yy * this.config.cols);
+    const yy = Math.floor(index / this.config.cols);
+    const xx = index - (yy * this.config.cols);
 
     this.placeAt(xx, yy, obj);
   }
@@ -61,13 +59,12 @@ class AlignGrid {
   showNumbers() {
     this.show();
     let count = 0;
-    for (let i = 0; i < this.config.rows; i++) {
-      for (let j = 0; j < this.config.cols; j++) {
-        let numText = this.scene.add.text(0, 0, count, { color: '#ff0000' });
+    for (let i = 0; i < this.config.rows; i += 1) {
+      for (let j = 0; j < this.config.cols; j += 1) {
+        const numText = this.scene.add.text(0, 0, count, { color: '#ff0000' });
         numText.setOrigin(0.5, 0.5);
         this.placeAtIndex(count, numText);
-
-        count++;
+        count += 1;
       }
     }
   }

@@ -9,16 +9,13 @@ class SceneBoot extends Phaser.Scene {
   constructor() {
     super('SceneBoot');
   }
-  preload() {
-    // this.load.image("button1", "images/ui/buttons/2/1.png")
-    // this.load.image("title", "images/title.png");
-  }
+
   create() {
     this.add.image(0, 0, 'background').setOrigin(0.5, 0.5);
     this.alignGrid = new AlignGrid({ rows: 15, cols: 15, scene: this });
     // this.alignGrid.showNumbers();
 
-    let title = this.add.image(0, 0, 'title');
+    const title = this.add.image(0, 0, 'title');
     Align.scaleToGameW(title, 0.8, this.game);
     this.alignGrid.placeAtIndex(37, title);
 
@@ -38,22 +35,29 @@ class SceneBoot extends Phaser.Scene {
     this.winner.angle = 0;
     this.alignGrid.placeAtIndex(112, this.winner);
 
-    let buttonStart = new FlatButton({ scene: this, key: 'button1', text: 'Play Again!', event: 'start_game' })
+    const buttonStart = new FlatButton({
+      scene: this, key: 'button1', text: 'Play Again!', event: 'start_game',
+    });
     this.alignGrid.placeAtIndex(157, buttonStart);
 
-    let buttonLeaderboard = new FlatButton({ scene: this, key: 'button1', text: 'Leaderboard', event: 'go_leaderboard' })
+    const buttonLeaderboard = new FlatButton({
+      scene: this, key: 'button1', text: 'Leaderboard', event: 'go_leaderboard',
+    });
     this.alignGrid.placeAtIndex(202, buttonLeaderboard);
 
     EventEmitter.on('start_game', this.startGame, this);
     EventEmitter.on('go_leaderboard', this.goToLeaderboard, this);
   }
+
+  // eslint-disable-next-line class-methods-use-this
   startGame() {
+    // eslint-disable-next-line no-restricted-globals
     location.reload();
   }
+
   goToLeaderboard() {
     this.scene.start('SceneLeaderboard');
   }
-  update() { }
 }
 
 export default SceneBoot;

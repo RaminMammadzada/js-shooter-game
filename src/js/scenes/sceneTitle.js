@@ -5,7 +5,6 @@ import EventEmitter from '../classes/util/eventEmitter';
 import Align from '../classes/util/align';
 import AlignGrid from '../classes/util/alignGrid';
 import FlatButton from '../classes/ui/flatButton';
-import Controller from '../classes/modelAndController/controller';
 import SoundButtons from '../classes/ui/soundButtons';
 import MediaManager from '../classes/util/mediaManager';
 import Model from '../classes/modelAndController/model';
@@ -26,9 +25,7 @@ class SceneTitle extends Phaser.Scene {
     const mediaManager = new MediaManager({ scene: this });
     mediaManager.setBackgroundMusic('backgroundMusic');
 
-    Controller.setEmitters();
     this.alignGrid = new AlignGrid({ rows: 11, cols: 11, scene: this });
-    // this.alignGrid.showNumbers();
 
     const title = this.add.image(0, 0, 'title');
     Align.scaleToGameW(title, 0.8, this.game);

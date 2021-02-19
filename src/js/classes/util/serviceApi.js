@@ -1,11 +1,7 @@
-import 'regenerator-runtime/runtime'
+import 'regenerator-runtime/runtime';
 
-const baseUrl = () => {
-  return 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/';
-};
-const getUrl = () => {
-  return `${baseUrl()}plPX1KbSDTjkjLXIA8ui/scores/`;
-};
+const baseUrl = () => 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/';
+const getUrl = () => `${baseUrl()}plPX1KbSDTjkjLXIA8ui/scores/`;
 
 const postScore = async (name, score) => {
   const data = {
@@ -21,9 +17,9 @@ const postScore = async (name, score) => {
         'Content-type': 'application/json; charset=UTF-8',
       },
     });
-    return console.log(response);
+    return response;
   } catch (error) {
-    return console.log(error.message);
+    return error.message;
   }
 };
 
@@ -36,7 +32,7 @@ const getScores = async () => {
     const filter = await response.json();
     return filter;
   } catch (error) {
-    return console.log(error.message);
+    return error.message;
   }
 };
 

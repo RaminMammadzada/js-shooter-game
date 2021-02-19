@@ -7,7 +7,6 @@ beforeEach(() => {
 });
 
 describe('GET', () => {
-
   it('should request with the right url (base_url/:id/scores)', () => {
     fetch.mockResponseOnce(JSON.stringify({
       result: [
@@ -40,7 +39,6 @@ describe('GET', () => {
 });
 
 describe('POST', () => {
-
   fetch.mockResponseOnce(JSON.stringify([{ result: 'Leaderboard score created correctly.' }]));
   const onResponse = jest.fn();
   const onError = jest.fn();
