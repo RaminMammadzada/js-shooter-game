@@ -96,7 +96,6 @@ You will start this game by having control of a player spaceship to move around 
 - You will be spawned on the top left corner of the screen.
 - From there, user can navigate by clicking to the specific location which you want to go. User can rotate the ship body using the mouse on desktop computers. The rotation feature in mobile device is calculated automatically when the aimed location to move is clicked.
 - User can fire a bullet by clicking `spacebar key` in keyboard. The target location which the bullet is send is specified by mouse `pointer`.
-- To fire, `point` your cursor on an enemy tank with your mouse and `click` on it or hit the `spacebar` key.
 - Enemy ship are designed to chase the player ship if user gets close to it. The enemy ship generally goes slower that user ship, although when it is attacked by the the player ship, it increases its speed and towards the player ship.
 - Player and enemy powers (healths) are displayed on the top of the screen.
 - There are extra disturbors in the game, there are stones. Player's power gets lower when they touch to player. However, the player can detroy them by fire bullet to them and can get score.
