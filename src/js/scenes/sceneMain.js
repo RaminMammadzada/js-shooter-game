@@ -236,9 +236,6 @@ class SceneMain extends Phaser.Scene {
   }
 
   backgroundClicked() {
-    // const elapsed = Math.abs(this.downTime - this.getTimer());
-    // console.log(elapsed);
-    // if (true) {
     const tx = this.background.input.localX;
     const ty = this.background.input.localY;
     this.tx = tx;
@@ -262,9 +259,6 @@ class SceneMain extends Phaser.Scene {
       angleForEnemyShip = this.toDegrees(angleForEnemyShip);
       this.enemyShip.angle = angleForEnemyShip;
     }
-    //   } else {
-    //   this.fireBulletForPlayerShip();
-    // }
   }
 
   setTargetIconLocation() {
@@ -397,8 +391,6 @@ class SceneMain extends Phaser.Scene {
   }
 
   update() {
-    // constant running loop
-
     if (this.playerShip && this.enemyShip) {
       const distanceX = Math.abs(this.playerShip.x - this.tx);
       const distanceY = Math.abs(this.playerShip.y - this.ty);
