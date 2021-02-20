@@ -18,9 +18,7 @@ class AlignGrid {
 
     this.scene = config.scene;
 
-    // cell width
     this.cw = config.width / config.cols;
-    // cell height
     this.ch = config.height / config.rows;
   }
 
@@ -41,7 +39,6 @@ class AlignGrid {
   }
 
   placeAt(xx, yy, obj) {
-    // calc position basedd upon the cellwidth and cellheight
     const x2 = this.cw * xx + this.cw / 2;
     const y2 = this.ch * yy + this.ch / 2;
 
