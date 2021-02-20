@@ -39,7 +39,7 @@
     <a href="https://github.com/RaminMammadzada/js-shooter-game"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://raminmammadzada.github.io/js-shooter-game/index.html/">Play the game online</a>
+    <a href="https://raminmammadzada.github.io/js-shooter-game/index.html">Play the game online</a>
     ·
     <a href="https://github.com/RaminMammadzada/js-shooter-game/issues">Report Bug</a>
     ·
