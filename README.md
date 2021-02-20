@@ -104,7 +104,7 @@ You will start this game by having control of a player spaceship to move around 
 
 ### Live Demo
 
-[Play the game online on GitHub Page](https://raminmammadzada.github.io/js-shooter-game/index.html
+[Play the game online on GitHub Page](https://raminmammadzada.github.io/js-shooter-game/index.html)
 
 ### Built With
 
