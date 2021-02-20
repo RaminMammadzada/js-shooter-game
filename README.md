@@ -70,11 +70,10 @@
         <li><a href="#Other-Info">Other information</a></li>
       </ul>
     </li>
-    <li><a href="#roadmap">Author</a></li>
+    <li><a href="#author">Author</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgements">Acknowledgements</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -84,24 +83,24 @@
 
 <img src="./docs/js-game-screenshot.gif" width="auto" height="auto" />
 
-It is a HTML5 game developed with [Phaser](https://phaser.io/) game development library. The he game inspired from this [Space Shooter project](https://learn.yorkcs.com/category/tutorials/gamedev/phaser-3/build-a-space-shooter-with-phaser-3/) and implemented by using game development best practices as much as possible.
+It is an HTML5 game developed with a [Phaser](https://phaser.io/) game development library. The game was inspired by this [Space Shooter project](https://learn.yorkcs.com/category/tutorials/gamedev/phaser-3/build-a-space-shooter-with-phaser-3/) and implemented by using game development best practices as much as possible.
 
-The specific [requirements](https://www.notion.so/Shooter-game-203e819041c7486bb36f9e65faecba27) are followed throughout the project. The game works on desktop computers and on mobile devices. Several features are developed to work differently for the mobile devices specifically, becuase there is not keybaord in mobile devices and other way of player relocation must be done.
+The specific [requirements](https://www.notion.so/Shooter-game-203e819041c7486bb36f9e65faecba27) are followed throughout the project. The game works on desktop computers and mobile devices. Several features are developed to work differently for mobile devices specifically because there is no keyboard in mobile devices and another way of player relocation must be done.
 
 ### Instructions
 
-You will start this game by having control of a player spaceship to move around and destroy enemy ship. Read the control instruction carefully below.
+You will start this game by having control of a player spaceship to move around and destroy an enemy ship. Read the control instruction carefully below.
 
 - The game starts by loading and asking you to insert your name. After that, click on the Play button to start the game.
 - You will be spawned on the top left corner of the screen.
-- From there, user can navigate by clicking to the specific location which you want to go. User can rotate the ship body using the mouse on desktop computers. The rotation feature in mobile device is calculated automatically when the aimed location to move is clicked.
-- User can fire a bullet by clicking `spacebar key` in keyboard. The target location which the bullet is send is specified by mouse `pointer`.
-- Enemy ship are designed to chase the player ship if user gets close to it. The enemy ship generally goes slower that user ship, although when it is attacked by the the player ship, it increases its speed and towards the player ship.
+- From there, the user can navigate by clicking on the specific location to which you want to go. The user can rotate the ship body using the mouse on desktop computers. The rotation feature in a mobile device is calculated automatically when the aimed location to move is clicked.
+- The User can fire a bullet by clicking the `spacebar key` on the keyboard. The target location to which the bullet is sent is specified by the mouse `pointer`.
+- The enemy ship is designed to chase the player ship if the user gets close to it. The enemy ship generally goes slower than the user ship, although when it is attacked by the player ship, it increases its speed and towards the player ship.
 - Player and enemy powers (healths) are displayed on the top of the screen.
-- There are extra disturbors in the game, there are stones. Player's power gets lower when they touch to player. However, the player can detroy them by fire bullet to them and can get score.
+- There are extra disturbers in the game, there are stones. The player's power gets lower when they touch the player. However, the player can destroy them by fire bullets at them and can get a score.
 
-- When player dies, it can restart the game or can go to leaderboard scene. Either way, your score, and name will be uploaded to the leaderboard API.
-- On the title screen and during the game, user can mute or unmute the background music of the game by clicking the music icon on the bottom left corner of the screen. User can also turn audios (such as shooting, explosion) on and off if needed by clicking the sound icon in the bottom right corner of the screen. you can navigate to the options screen to turn audio on/off.
+- When the player dies, it can restart the game or can go to the leaderboard scene. Either way, your score, and name will be uploaded to the leaderboard API.
+- On the title screen and during the game, the user can mute or unmute the background music of the game by clicking the music icon on the bottom left corner of the screen. The user can also turn audios (such as shooting, explosion) on and off if needed by clicking the sound icon in the bottom right corner of the screen. you can navigate to the options screen to turn audio on/off.
 
 ### Live Demo
 
@@ -163,7 +162,7 @@ Contributions are what make the open-source community such an amazing place to l
 
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
@@ -187,7 +186,7 @@ Give a ⭐️ if you like this project!
 
 <!-- ACKNOWLEDGEMENTS -->
 
-## Acknowledgements
+## Acknowledgments
 
 - [Microverse](Microverse.org)
 - [Phaser.io](https://phaser.io/)
