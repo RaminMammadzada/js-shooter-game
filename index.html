@@ -22,34 +22,41 @@
       <meta property="og:description" content="It is an HTML5 space shooter game I developed with a Phaser library. The game works on desktop computers and mobile devices. Several features are developed to work differently for mobile devices specifically.">
         <meta property="og:url" content="https://raminmammadzada.github.io/js-shooter-game/index.html"></meta>
 <style>
+  @media screen and (min-width: 600px) {
+    .icon-bar {
+    position: fixed;
+    top: 4%;
+    right: 0%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    border: solid;
+    border-color: white;
+  }
+
+  .icon-bar a {
+    display: block;
+    text-align: center;
+    padding: 10px;
+    transition: all 0.3s ease;
+    color: white;
+    font-size: 15px;
+  }
+
+  .icon-bar a:hover {
+    background-color: #fafafa;
+    color: black;
+  }
+
+  .github {
+    background: #000000;
+    color: white;
+  }
+}
+
+@media screen and (max-width: 599px) {
   .icon-bar {
-  position: fixed;
-  top: 4%;
-  right: 0%;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-  border: solid;
-  border-color: white;
-}
-
-.icon-bar a {
-  display: block;
-  text-align: center;
-  padding: 10px;
-  transition: all 0.3s ease;
-  color: white;
-  font-size: 15px;
-}
-
-.icon-bar a:hover {
-  background-color: #fafafa;
-  color: black;
-}
-
-.github {
-  background: #000000;
-  color: white;
+    visibility: collapse;
 }
 </style>
       </head>
