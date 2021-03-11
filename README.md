@@ -81,7 +81,7 @@
 
 ## About The Project
 
-<img src="./docs/js-game-screenshot.gif" width="auto" height="auto" />
+<img src="./docs/screenshot.jpg" width="auto" height="auto" />
 
 It is an HTML5 game developed with a [Phaser](https://phaser.io/) game development library. The game was inspired by this [Space Shooter project](https://learn.yorkcs.com/category/tutorials/gamedev/phaser-3/build-a-space-shooter-with-phaser-3/) and implemented by using game development best practices as much as possible.
 
