@@ -26,8 +26,30 @@ class SceneMain extends Phaser.Scene {
     this.centerX = this.game.config.width / 2;
     this.center = this.game.config.height / 2;
 
-    this.background = this.add.image(0, 0, 'background');
-    this.background.setOrigin(0, 0);
+    // Parallax Background Layers
+    // Far Layer (darkest, scrolls slowest)
+    this.backgroundLayerFar = this.add.image(0, 0, 'background');
+    this.backgroundLayerFar.setOrigin(0, 0);
+    this.backgroundLayerFar.setScrollFactor(0.25);
+    this.backgroundLayerFar.setDepth(-2);
+    this.backgroundLayerFar.tint = 0x555555; // Darker gray
+    Align.scaleToGameW(this.backgroundLayerFar, 1, this.game); // Scale to cover game width
+
+    // Middle Layer (medium gray, scrolls medium)
+    this.backgroundLayerMiddle = this.add.image(0, 0, 'background');
+    this.backgroundLayerMiddle.setOrigin(0, 0);
+    this.backgroundLayerMiddle.setScrollFactor(0.5);
+    this.backgroundLayerMiddle.setDepth(-1);
+    this.backgroundLayerMiddle.tint = 0xaaaaaa; // Lighter gray
+    Align.scaleToGameW(this.backgroundLayerMiddle, 1, this.game); // Scale to cover game width
+
+    // Near Layer (original, scrolls fastest)
+    this.backgroundLayerNear = this.add.image(0, 0, 'background');
+    this.backgroundLayerNear.setOrigin(0, 0);
+    this.backgroundLayerNear.setScrollFactor(0.75); // Or 1 if preferred for main gameplay
+    this.backgroundLayerNear.setDepth(0);
+    // this.backgroundLayerNear.tint = 0xffffff; // No tint or explicit white
+
     this.playerShip = this.physics.add.sprite(this.centerX, this.centerY, 'playerShip');
     this.playerShip.setOrigin(0.5, 0.5);
     Align.scaleToGameW(this.playerShip, 0.125, this.game);
@@ -37,11 +59,13 @@ class SceneMain extends Phaser.Scene {
 
     this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
-    this.background.setInteractive();
-    this.background.on('pointerup', this.backgroundClicked, this);
-    this.physics.world.setBounds(0, 0, this.background.displayWidth, this.background.displayHeight);
+    // Interactive layer remains the near layer
+    this.backgroundLayerNear.setInteractive();
+    this.backgroundLayerNear.on('pointerup', this.backgroundClicked, this);
+    // World and camera bounds based on the near layer (main interactive area)
+    this.physics.world.setBounds(0, 0, this.backgroundLayerNear.displayWidth, this.backgroundLayerNear.displayHeight);
 
-    this.cameras.main.setBounds(0, 0, this.background.displayWidth, this.background.displayHeight);
+    this.cameras.main.setBounds(0, 0, this.backgroundLayerNear.displayWidth, this.backgroundLayerNear.displayHeight);
     this.cameras.main.startFollow(this.playerShip, true);
 
     this.playerBulletGroup = this.physics.add.group();
@@ -58,10 +82,14 @@ class SceneMain extends Phaser.Scene {
 
     this.enemyShip = this.physics.add.sprite(this.centerX, 0, 'enemyShip');
     Align.scaleToGameW(this.enemyShip, 0.25, this.game);
+    this.enemyShipOriginalScale = this.enemyShip.scaleX; // Store original scale
     this.enemyShip.body.collideWorldBounds = true;
 
     this.rockGroup = this.physics.add.group();
     this.addRocks();
+
+    this.spaceMineGroup = this.physics.add.group();
+    this.addSpaceMines(); // Initial spawn of 3 mines
 
     this.showInfo();
     this.setColliders();
@@ -104,6 +132,21 @@ class SceneMain extends Phaser.Scene {
       this.increaseScore,
       this,
     );
+
+    // Space Mine Colliders
+    this.physics.add.collider(this.playerShip, this.spaceMineGroup, this.playerHitMine, null, this);
+    this.physics.add.collider(this.playerBulletGroup, this.spaceMineGroup, this.playerBulletHitMine, this.increaseScoreAndCheckMines, this);
+    this.physics.add.collider(this.enemyBulletGroup, this.spaceMineGroup, this.enemyBulletHitMine, null, this);
+  }
+
+  // Process callback for player bullet hitting mine to also check for respawn
+  increaseScoreAndCheckMines(bullet, mine) {
+    if (this.playerPower !== 0) {
+      EventEmitter.emit(Constants.UP_POINTS, 1); // From original increaseScore
+    }
+    // Actual destruction and specific mine logic will be in playerBulletHitMine
+    // This callback primarily ensures score is counted if the collision is valid
+    return true;
   }
 
   setRockColliders() {
@@ -149,6 +192,43 @@ class SceneMain extends Phaser.Scene {
       EventEmitter.emit(Constants.UP_POINTS, 1);
     }
     return true;
+  }
+
+  // Space Mine Collision Handlers
+  playerHitMine(playerShip, mine) {
+    const explosion = this.add.sprite(mine.x, mine.y, 'exp');
+    explosion.play('boom');
+    EventEmitter.emit(Constants.PLAY_SOUND, 'explode');
+    mine.destroy();
+    this.decreasePlayerPower(); // Damage 1
+    this.decreasePlayerPower(); // Damage 2 - significant damage
+    if (this.spaceMineGroup.getChildren().length === 0) {
+      this.addSpaceMines();
+    }
+  }
+
+  playerBulletHitMine(bullet, mine) {
+    const explosion = this.add.sprite(mine.x, mine.y, 'exp');
+    explosion.play('boom');
+    EventEmitter.emit(Constants.PLAY_SOUND, 'explode');
+    mine.destroy();
+    bullet.destroy();
+    EventEmitter.emit(Constants.UP_POINTS, 5); // Specific points for mine destruction
+    // Respawn check is now implicitly handled after increaseScoreAndCheckMines, but good to have here too
+    if (this.spaceMineGroup.getChildren().length === 0) {
+      this.addSpaceMines();
+    }
+  }
+
+  enemyBulletHitMine(bullet, mine) {
+    const explosion = this.add.sprite(mine.x, mine.y, 'exp');
+    explosion.play('boom');
+    EventEmitter.emit(Constants.PLAY_SOUND, 'explode');
+    mine.destroy();
+    bullet.destroy();
+    if (this.spaceMineGroup.getChildren().length === 0) {
+      this.addSpaceMines();
+    }
   }
 
   destroyBullets(playerBullet, enemyBullet) {
@@ -236,8 +316,8 @@ class SceneMain extends Phaser.Scene {
   }
 
   backgroundClicked() {
-    const tx = this.background.input.localX;
-    const ty = this.background.input.localY;
+    const tx = this.backgroundLayerNear.input.localX;
+    const ty = this.backgroundLayerNear.input.localY;
     this.tx = tx;
     this.ty = ty;
     let angle = this.physics.moveTo(this.playerShip, tx, ty, 150);
@@ -307,7 +387,22 @@ class SceneMain extends Phaser.Scene {
 
     enemyBullet.angle = this.enemyShip.angle;
     this.enemyBulletGroup.add(enemyBullet);
-    this.physics.moveTo(enemyBullet, this.playerShip.x, this.playerShip.y, 150);
+
+    // Predict Player's Future Position
+    const predictionTime = 0.5; // seconds
+    const predictedX = this.playerShip.x + this.playerShip.body.velocity.x * predictionTime;
+    const predictedY = this.playerShip.y + this.playerShip.body.velocity.y * predictionTime;
+
+    // Add Randomness to Prediction
+    const randomFactor = 50; // pixels
+    const randomOffsetX = (Math.random() - 0.5) * randomFactor;
+    const randomOffsetY = (Math.random() - 0.5) * randomFactor;
+
+    const finalPredictedX = predictedX + randomOffsetX;
+    const finalPredictedY = predictedY + randomOffsetY;
+
+    // Aim at the Predicted Position
+    this.physics.moveTo(enemyBullet, finalPredictedX, finalPredictedY, 150);
     EventEmitter.emit(Constants.PLAY_SOUND, 'playerShoot');
   }
 
@@ -354,6 +449,18 @@ class SceneMain extends Phaser.Scene {
     this.uiGrid.placeAtIndex(16, this.scoreBox);
   }
 
+  addSpaceMines(count = 3) {
+    for (let i = 0; i < count; i++) {
+      const x = Phaser.Math.Between(0, this.backgroundLayerNear.displayWidth);
+      const y = Phaser.Math.Between(0, this.backgroundLayerNear.displayHeight);
+      const mine = this.physics.add.sprite(x, y, 'enemyBullet');
+      mine.setTint(0xff0000).setScale(1.5); // Red tint and scaled up
+      this.spaceMineGroup.add(mine);
+      mine.body.setImmovable(true);
+      mine.body.setVelocity(0, 0);
+    }
+  }
+
   addRocks() {
     if (this.rockGroup.getChildren().length === 0) {
       this.rockGroup = this.physics.add.group({
@@ -367,8 +474,8 @@ class SceneMain extends Phaser.Scene {
       });
 
       this.rockGroup.children.iterate((child) => {
-        const xx = Math.floor(Math.random() * this.background.displayWidth);
-        const yy = Math.floor(Math.random() * this.background.displayHeight);
+        const xx = Math.floor(Math.random() * this.backgroundLayerNear.displayWidth);
+        const yy = Math.floor(Math.random() * this.backgroundLayerNear.displayHeight);
 
         child.x = xx;
         child.y = yy;
@@ -408,6 +515,28 @@ class SceneMain extends Phaser.Scene {
 
       if (this.keySpace.isDown) {
         this.fireBulletForPlayerShip();
+      }
+
+      // Dynamic Enemy Ship Scaling for Depth Illusion
+      const distance = Phaser.Math.Distance.Between(
+        this.playerShip.x,
+        this.playerShip.y,
+        this.enemyShip.x,
+        this.enemyShip.y,
+      );
+      const maxDistance = this.game.config.width * 0.75;
+      const minDistance = this.game.config.width * 0.1;
+      const actualMaxScale = this.enemyShipOriginalScale * 1.1;
+      const actualMinScale = this.enemyShipOriginalScale * 0.9;
+
+      if (distance < minDistance) {
+        this.enemyShip.setScale(actualMaxScale);
+      } else if (distance > maxDistance) {
+        this.enemyShip.setScale(actualMinScale);
+      } else {
+        const normalizedDistance = (distance - minDistance) / (maxDistance - minDistance);
+        const targetScale = actualMaxScale - (normalizedDistance * (actualMaxScale - actualMinScale));
+        this.enemyShip.setScale(targetScale);
       }
     }
 
