@@ -22,7 +22,6 @@ const config = {
     '.otf': 'file',
     '.eot': 'file'
   },
-  publicPath: './',
   assetNames: '[dir]/[name]',
   chunkNames: '[name]',
   entryNames: '[name]',
