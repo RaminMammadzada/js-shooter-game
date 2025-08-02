@@ -1,0 +1,64 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - feature/build-artifacts
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout feature/build-artifacts
+      uses: actions/checkout@v4
+      with:
+        ref: feature/build-artifacts
+        path: source
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: source/package-lock.json
+
+    - name: Install dependencies
+      run: |
+        cd source
+        npm ci
+
+    - name: Build the project
+      run: |
+        cd source
+        npm run build
+
+    - name: Checkout gh-page branch
+      uses: actions/checkout@v4
+      with:
+        ref: gh-page
+        path: gh-page
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Clean gh-page branch (keep only .git)
+      run: |
+        cd gh-page
+        find . -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
+
+    - name: Copy build artifacts to gh-page
+      run: |
+        cp -r source/dist/* gh-page/
+
+    - name: Commit and push to gh-page
+      run: |
+        cd gh-page
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add .
+        if git diff --staged --quiet; then
+          echo "No changes to commit"
+        else
+          git commit -m "Deploy build artifacts from feature/build-artifacts"
+          git push origin gh-page
+        fi
