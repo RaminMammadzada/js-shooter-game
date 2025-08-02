@@ -16,8 +16,8 @@
   "scripts": {
     "test": "jest",
     "test-watch": "jest --watch *.js",
-    "build": "node esbuild.config.js --minify && cp src/index.html dist/",
-    "dev": "node esbuild.config.js --watch & cp src/index.html dist/ && npx serve dist -l 8072",
+    "build": "cross-env MINIFY=true node esbuild.config.js && copyfiles -f src/index.html dist",
+    "dev": "copyfiles -f src/index.html dist && concurrently \"node esbuild.config.js --watch\" \"npx serve dist -l 8072\"",
     "start": "npm run build && npx serve dist -l 8072"
   },
   "author": "",
@@ -28,6 +28,9 @@
     "@fortawesome/fontawesome-free": "^5.15.1",
     "@popperjs/core": "^2.6.0",
     "bootstrap": "^4.5.3",
+    "concurrently": "^9.2.0",
+    "copyfiles": "^2.4.1",
+    "cross-env": "^10.0.0",
     "esbuild": "^0.25.8",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",

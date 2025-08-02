@@ -28,7 +28,7 @@ const config = {
   entryNames: '[name]',
   write: true,
   sourcemap: true,
-  minify: process.argv.includes('--minify')
+  minify: process.env.MINIFY === 'true'
 };
 
 // Export for use as a module
@@ -44,6 +44,6 @@ if (require.main === module) {
     });
   } else {
     // Production build
-    esbuild.build(config).catch(() => process.exit(1));
+    esbuild.build(config).catch((err) => { console.error(err); process.exit(1); });
   }
 }
