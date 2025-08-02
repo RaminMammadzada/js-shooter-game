@@ -23,7 +23,6 @@ const config = {
     '.eot': 'file'
   },
   assetNames: '[dir]/[name]',
-  chunkNames: '[name]',
   entryNames: '[name]',
   write: true,
   sourcemap: true,
