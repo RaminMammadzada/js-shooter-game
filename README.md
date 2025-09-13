@@ -149,6 +149,16 @@ To set this project upon a local environment clone, or download this repo and fo
 - Navigate to the root folder of your local copy and type `npm run test` or `npm run test-watch` to run jest.
 - You can add more tests in the `./test` directory.
 
+### GitHub Actions Workflows
+
+This project includes several automated workflows:
+
+- **CI**: Runs tests and builds the application on every push and pull request
+- **Linters**: Runs ESLint and Stylelint to ensure code quality
+- **Security**: Performs dependency audits and security scans
+- **Deploy**: Automatically deploys to GitHub Pages when changes are pushed to main branch
+- **Dependabot**: Automatically creates pull requests for dependency updates
+
 ### other information
 
 - if you run into `npm ERR! Unexpected end of JSON input while parsing near...` run the following in their respective order. `npm config set fetch-retry-maxtimeout 60000` then
