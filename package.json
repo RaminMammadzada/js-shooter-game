@@ -27,6 +27,7 @@
     "@babel/preset-env": "^7.28.0",
     "@fortawesome/fontawesome-free": "^5.15.1",
     "@popperjs/core": "^2.6.0",
+    "babel-eslint": "^10.1.0",
     "bootstrap": "^4.5.3",
     "concurrently": "^9.2.0",
     "copyfiles": "^2.4.1",
