@@ -44,7 +44,7 @@
     "popper.js": "^1.16.1",
     "sass": "^1.99.0",
     "serve": "^14.2.6",
-    "sparticles": "^1.2.0",
+    "sparticles": "^2.1.0",
     "stylelint": "^13.3.3",
     "stylelint-config-standard": "^20.0.0",
     "stylelint-csstree-validator": "^1.9.0",
