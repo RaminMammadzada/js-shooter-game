@@ -43,8 +43,10 @@
     "unsplash-js": "^7.0.20"
   },
   "dependencies": {
+    "peerjs": "^1.5.5",
     "phaser": "^3.90.0",
     "phaser3-rex-plugins": "^1.80.20",
-    "regenerator-runtime": "^0.14.1"
+    "regenerator-runtime": "^0.14.1",
+    "three": "^0.169.0"
   }
 }

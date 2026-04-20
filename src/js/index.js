@@ -1,4 +1,5 @@
-import Game from './game';
-import '../styles/style.css';
+import ThreeGame from "./three3d/game";
+import "../styles/style.css";
 
-window.game = new Game();
+const container = document.getElementById("phaser-game");
+window.game = new ThreeGame(container);

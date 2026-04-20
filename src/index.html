@@ -1,12 +1,53 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JS Shooter Game</title>
-    <link rel="stylesheet" href="./index.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cosmos Wars 3D — JS Shooter</title>
+    <link rel="stylesheet" href="./index.css" />
+  </head>
+  <body>
+    <div class="stage">
+      <header class="topbar">
+        <h1 class="brand">
+          <span class="brand-glyph">◢◤</span>
+          Cosmos&nbsp;Wars
+          <span class="brand-tag">3D</span>
+        </h1>
+        <p class="tagline">A WebGL space shooter — defend the rim.</p>
+      </header>
+
+      <main class="game-frame">
+        <div id="phaser-game" class="game-canvas">
+          <div id="hud-overlay">
+            <div class="hud-top">
+              <div class="hud-cell">
+                <span class="hud-label">SCORE</span>
+                <span class="hud-value" id="hud-score">000000</span>
+              </div>
+              <div class="hud-cell hud-cell-center">
+                <span class="hud-value" id="hud-wave">WAVE 1</span>
+              </div>
+              <div class="hud-cell hud-cell-right">
+                <span class="hud-label">LIVES</span>
+                <span class="hud-value hud-lives" id="hud-lives">♥♥♥</span>
+              </div>
+            </div>
+
+            <div class="hud-power" id="hud-power"></div>
+            <div class="hud-net" id="hud-net"></div>
+            <div class="hud-toast" id="hud-toast"></div>
+
+            <div class="hud-banner" id="hud-banner"></div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="bottombar">
+        <span class="hint">Move: WASD / arrows / drag &nbsp;·&nbsp; Fire: Space / hold mouse</span>
+        <span class="version">v4.0 · Three.js · WebRTC co-op</span>
+      </footer>
+    </div>
     <script src="./index.js"></script>
-</body>
+  </body>
 </html>
