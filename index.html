@@ -1,69 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Cosmos Wars</title>
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
-      crossorigin="anonymous"
-    />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmos Wars — JS Shooter</title>
+    <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+    <div class="stage">
+        <header class="topbar">
+            <h1 class="brand">
+                <span class="brand-glyph">◢◤</span>
+                Cosmos&nbsp;Wars
+            </h1>
+            <p class="tagline">Defend the rim. Score for the leaderboard.</p>
+        </header>
 
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta property="og:title" content="Cosmos Wars - HTML5 game developed with Phaser">
-  <meta property="og:author" content="Ramin Mammadzada">
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://raw.githubusercontent.com/RaminMammadzada/js-shooter-game/fb-game/docs/cosmoswars_logo.jpg">
-      <meta property="og:description" content="It is an HTML5 space shooter game I developed with a Phaser library. The game works on desktop computers and mobile devices. Several features are developed to work differently for mobile devices specifically.">
-        <meta property="og:url" content="https://raminmammadzada.github.io/js-shooter-game/index.html"></meta>
-<style>
-  @media screen and (min-width: 600px) {
-    .icon-bar {
-    position: fixed;
-    top: 4%;
-    right: 0%;
-    -webkit-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-    border: solid;
-    border-color: white;
-  }
+        <main class="game-frame">
+            <div id="phaser-game" class="game-canvas"></div>
+        </main>
 
-  .icon-bar a {
-    display: block;
-    text-align: center;
-    padding: 10px;
-    transition: all 0.3s ease;
-    color: white;
-    font-size: 15px;
-  }
-
-  .icon-bar a:hover {
-    background-color: #fafafa;
-    color: black;
-  }
-
-  .github {
-    background: #000000;
-    color: white;
-  }
-}
-
-@media screen and (max-width: 599px) {
-  .icon-bar {
-    visibility: collapse;
-}
-</style>
-      </head>
-
-  <body>
-    <div class="icon-bar">
-      <a href="https://github.com/RaminMammadzada/js-shooter-game" class="github">Check source on <i class="fa fa-github"></i></a>
+        <footer class="bottombar">
+            <span class="hint">Move: arrow keys / drag &nbsp;·&nbsp; Fire: auto</span>
+            <span class="version">v2.0 · Phaser 3 · esbuild</span>
+        </footer>
     </div>
-  </body>
-</html><script src="./bundle.js"></script>
+    <script src="./index.js"></script>
+</body>
+</html>
