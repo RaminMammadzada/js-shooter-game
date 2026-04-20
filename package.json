@@ -39,7 +39,7 @@
     "jest-canvas-mock": "^2.5.2",
     "jest-expect-subclass": "^1.0.1",
     "jest-fetch-mock": "^3.0.3",
-    "jquery": "^3.5.1",
+    "jquery": "^4.0.0",
     "node-fetch": "^2.6.1",
     "popper.js": "^1.16.1",
     "sass": "^1.30.0",
