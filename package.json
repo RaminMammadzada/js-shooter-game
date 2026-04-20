@@ -53,7 +53,7 @@
   },
   "dependencies": {
     "phaser": "^4.0.0",
-    "phaser3-rex-plugins": "^1.1.39",
+    "phaser3-rex-plugins": "^1.80.20",
     "regenerator-runtime": "^0.13.7"
   }
 }
