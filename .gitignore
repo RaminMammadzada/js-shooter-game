@@ -108,3 +108,7 @@ src/.DS_Store
 
 dist
 dist/*
+
+# App modernization tool artifacts
+.tsupgrader/
+testResults_*.json
