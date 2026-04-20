@@ -1,7 +1,7 @@
-import Model from '../modelAndController/model';
-import EventEmitter from './eventEmitter';
-import Constants from '../../constants';
-import { getSpaceMusic } from './spaceMusic';
+import Model from "../modelAndController/model";
+import EventEmitter from "./eventEmitter";
+import Constants from "../../constants";
+import { getSpaceMusic } from "./spaceMusic";
 
 class MediaManager {
   constructor(config) {

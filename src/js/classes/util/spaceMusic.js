@@ -9,15 +9,15 @@
 const PROGRESSION = [
   // [root semitones from A4=0, chord intervals]
   { root: -12, intervals: [0, 7, 12, 15] }, // Am
-  { root: -7,  intervals: [0, 7, 12, 16] }, // F  (relative)
-  { root: -5,  intervals: [0, 7, 12, 16] }, // C
-  { root: -3,  intervals: [0, 7, 12, 15] }, // Dm
+  { root: -7, intervals: [0, 7, 12, 16] }, // F  (relative)
+  { root: -5, intervals: [0, 7, 12, 16] }, // C
+  { root: -3, intervals: [0, 7, 12, 15] }, // Dm
 ];
 
 const ARP_PATTERN = [0, 2, 1, 3, 1, 2];
 
 const A4 = 440;
-const semitone = (n) => A4 * (2 ** (n / 12));
+const semitone = (n) => A4 * 2 ** (n / 12);
 
 class SpaceMusic {
   constructor() {
@@ -41,10 +41,13 @@ class SpaceMusic {
   start() {
     this.ensureContext();
     if (!this.ctx || this.playing) return;
-    if (this.ctx.state === 'suspended') this.ctx.resume();
+    if (this.ctx.state === "suspended") this.ctx.resume();
     this.playing = true;
     this.master.gain.cancelScheduledValues(this.ctx.currentTime);
-    this.master.gain.linearRampToValueAtTime(this.volume, this.ctx.currentTime + 1.2);
+    this.master.gain.linearRampToValueAtTime(
+      this.volume,
+      this.ctx.currentTime + 1.2,
+    );
 
     const beat = 0.5; // seconds per arp note
     const barNotes = ARP_PATTERN.length;
@@ -81,7 +84,7 @@ class SpaceMusic {
     chord.intervals.forEach((iv) => {
       const freq = semitone(chord.root + iv);
       this.voice({
-        type: 'sawtooth',
+        type: "sawtooth",
         freq,
         startTime,
         duration: duration + 0.4,
@@ -91,7 +94,7 @@ class SpaceMusic {
         filterFreq: 1200,
       });
       this.voice({
-        type: 'sine',
+        type: "sine",
         freq: freq * 2,
         startTime,
         duration: duration + 0.4,
@@ -108,7 +111,7 @@ class SpaceMusic {
       const interval = chord.intervals[step % chord.intervals.length];
       const freq = semitone(chord.root + interval + 12); // up an octave
       this.voice({
-        type: 'triangle',
+        type: "triangle",
         freq,
         startTime: startTime + i * beat,
         duration: beat * 0.9,
@@ -123,7 +126,7 @@ class SpaceMusic {
   scheduleBass(startTime, duration, chord) {
     const freq = semitone(chord.root - 12);
     this.voice({
-      type: 'sine',
+      type: "sine",
       freq,
       startTime,
       duration: duration + 0.2,
@@ -134,12 +137,21 @@ class SpaceMusic {
     });
   }
 
-  voice({ type, freq, startTime, duration, attack, release, peak, filterFreq }) {
+  voice({
+    type,
+    freq,
+    startTime,
+    duration,
+    attack,
+    release,
+    peak,
+    filterFreq,
+  }) {
     if (!this.ctx) return;
     const osc = this.ctx.createOscillator();
     const gain = this.ctx.createGain();
     const filter = this.ctx.createBiquadFilter();
-    filter.type = 'lowpass';
+    filter.type = "lowpass";
     filter.frequency.value = filterFreq;
     osc.type = type;
     osc.frequency.value = freq;
