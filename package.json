@@ -31,7 +31,7 @@
     "concurrently": "^9.2.1",
     "copyfiles": "^2.4.1",
     "cross-env": "^10.1.0",
-    "esbuild": "^0.25.8",
+    "esbuild": "^0.28.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.2",
