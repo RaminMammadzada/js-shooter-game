@@ -1,15 +1,5 @@
 {
   "name": "js-game-1",
-  "jest": {
-    "preset": "ts-jest",
-    "testEnvironment": "node",
-    "transform": {
-      "node_modules/variables/.+\\.(j|t)sx?$": "ts-jest"
-    },
-    "transformIgnorePatterns": [
-      "node_modules/(?!variables/.*)"
-    ]
-  },
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -37,6 +27,7 @@
     "eslint-plugin-import": "^2.32.0",
     "jest": "^30.3.0",
     "jest-canvas-mock": "^2.5.2",
+    "jest-environment-jsdom": "^30.3.0",
     "jest-expect-subclass": "^1.0.1",
     "jest-fetch-mock": "^3.0.3",
     "jquery": "^4.0.0",
