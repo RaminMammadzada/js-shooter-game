@@ -43,7 +43,7 @@
     "node-fetch": "^3.3.2",
     "popper.js": "^1.16.1",
     "sass": "^1.99.0",
-    "serve": "^14.2.4",
+    "serve": "^14.2.6",
     "sparticles": "^1.2.0",
     "stylelint": "^13.3.3",
     "stylelint-config-standard": "^20.0.0",
