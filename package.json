@@ -1,15 +1,5 @@
 {
   "name": "js-game-1",
-  "jest": {
-    "preset": "ts-jest",
-    "testEnvironment": "node",
-    "transform": {
-      "node_modules/variables/.+\\.(j|t)sx?$": "ts-jest"
-    },
-    "transformIgnorePatterns": [
-      "node_modules/(?!variables/.*)"
-    ]
-  },
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -23,37 +13,38 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@babel/core": "^7.28.0",
-    "@babel/preset-env": "^7.28.0",
-    "@fortawesome/fontawesome-free": "^5.15.1",
-    "@popperjs/core": "^2.6.0",
-    "bootstrap": "^4.5.3",
-    "concurrently": "^9.2.0",
+    "@babel/core": "^7.29.0",
+    "@babel/preset-env": "^7.29.2",
+    "@fortawesome/fontawesome-free": "^7.2.0",
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.8",
+    "concurrently": "^9.2.1",
     "copyfiles": "^2.4.1",
-    "cross-env": "^10.0.0",
-    "esbuild": "^0.25.8",
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb-base": "^14.1.0",
-    "eslint-plugin-import": "^2.20.2",
-    "jest": "^26.6.3",
-    "jest-canvas-mock": "^2.3.0",
+    "cross-env": "^10.1.0",
+    "esbuild": "^0.28.0",
+    "eslint": "^10.2.1",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.32.0",
+    "jest": "^30.3.0",
+    "jest-canvas-mock": "^2.5.2",
+    "jest-environment-jsdom": "^30.3.0",
     "jest-expect-subclass": "^1.0.1",
     "jest-fetch-mock": "^3.0.3",
-    "jquery": "^3.5.1",
-    "node-fetch": "^2.6.1",
+    "jquery": "^4.0.0",
+    "node-fetch": "^3.3.2",
     "popper.js": "^1.16.1",
-    "sass": "^1.30.0",
-    "serve": "^14.2.4",
-    "sparticles": "^1.2.0",
-    "stylelint": "^13.3.3",
-    "stylelint-config-standard": "^20.0.0",
-    "stylelint-csstree-validator": "^1.9.0",
-    "stylelint-scss": "^3.17.2",
-    "unsplash-js": "^7.0.2"
+    "sass": "^1.99.0",
+    "serve": "^14.2.6",
+    "sparticles": "^2.1.0",
+    "stylelint": "^17.8.0",
+    "stylelint-config-standard": "^40.0.0",
+    "stylelint-csstree-validator": "^4.0.0",
+    "stylelint-scss": "^7.0.0",
+    "unsplash-js": "^7.0.20"
   },
   "dependencies": {
-    "phaser": "^3.52.0",
-    "phaser3-rex-plugins": "^1.1.39",
-    "regenerator-runtime": "^0.13.7"
+    "phaser": "^4.0.0",
+    "phaser3-rex-plugins": "^1.80.20",
+    "regenerator-runtime": "^0.14.1"
   }
 }

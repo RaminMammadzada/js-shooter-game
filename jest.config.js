@@ -1,4 +1,5 @@
 module.exports = {
+  testEnvironment: 'jsdom',
   setupFiles: ['./setupTests.js', 'jest-canvas-mock'],
   setupFilesAfterEnv: [
     'jest-expect-subclass',
