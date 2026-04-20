@@ -35,7 +35,7 @@ class FlatButton extends Phaser.GameObjects.Container {
 
     this.scene.add.existing(this);
     if (config.event) {
-      this.back.setInteractive();
+      this.back.setInteractive({ useHandCursor: true });
       this.back.on('pointerdown', this.pressed, this);
     }
 
@@ -46,14 +46,41 @@ class FlatButton extends Phaser.GameObjects.Container {
   }
 
   over() {
-    this.y -= 5;
+    if (this.hoverTween) this.hoverTween.stop();
+    this.hoverTween = this.scene.tweens.add({
+      targets: this,
+      scale: 1.08,
+      duration: 140,
+      ease: 'Sine.easeOut',
+    });
+    if (this.back && this.back.setTint) {
+      this.back.setTint(0xbfefff);
+    }
   }
 
   out() {
-    this.y += 5;
+    if (this.hoverTween) this.hoverTween.stop();
+    this.hoverTween = this.scene.tweens.add({
+      targets: this,
+      scale: 1,
+      duration: 140,
+      ease: 'Sine.easeOut',
+    });
+    if (this.back && this.back.clearTint) {
+      this.back.clearTint();
+    }
   }
 
   pressed() {
+    if (this.scene && this.scene.tweens) {
+      this.scene.tweens.add({
+        targets: this,
+        scale: 0.94,
+        yoyo: true,
+        duration: 90,
+        ease: 'Quad.easeOut',
+      });
+    }
     if (this.config.params) {
       EventEmitter.emit(this.config.event, this.config.params);
     } else {

@@ -3,10 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JS Shooter Game</title>
+    <title>Cosmos Wars — JS Shooter</title>
     <link rel="stylesheet" href="./index.css">
 </head>
 <body>
+    <div class="stage">
+        <header class="topbar">
+            <h1 class="brand">
+                <span class="brand-glyph">◢◤</span>
+                Cosmos&nbsp;Wars
+            </h1>
+            <p class="tagline">Defend the rim. Score for the leaderboard.</p>
+        </header>
+
+        <main class="game-frame">
+            <div id="phaser-game" class="game-canvas"></div>
+        </main>
+
+        <footer class="bottombar">
+            <span class="hint">Move: arrow keys / drag &nbsp;·&nbsp; Fire: auto</span>
+            <span class="version">v2.0 · Phaser 3 · esbuild</span>
+        </footer>
+    </div>
     <script src="./index.js"></script>
 </body>
 </html>

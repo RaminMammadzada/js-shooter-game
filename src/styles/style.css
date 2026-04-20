@@ -1,9 +1,166 @@
-body {
-  margin: 1%;
-  padding: 1%;
-  width: 100%;
-  height: auto;
-  background-color: black;
+/* ---------- Cosmos Wars — page chrome ---------- */
+
+:root {
+  --bg-0: #05060d;
+  --bg-1: #0b0f24;
+  --neon-cyan: #5ef0ff;
+  --neon-magenta: #ff5ed1;
+  --neon-violet: #9a6bff;
+  --text: #e6f1ff;
+  --text-dim: #8a9bd1;
+  --frame-glow: 0 0 24px rgba(94, 240, 255, 0.35),
+                0 0 60px rgba(154, 107, 255, 0.25);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: 'Segoe UI', 'Helvetica Neue', system-ui, sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(154, 107, 255, 0.18), transparent 55%),
+    radial-gradient(ellipse at 85% 90%, rgba(94, 240, 255, 0.14), transparent 60%),
+    linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 60%, var(--bg-0) 100%);
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+
+/* Subtle starfield */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(1px 1px at 12% 22%, #fff, transparent 60%),
+    radial-gradient(1px 1px at 78% 14%, #cfe9ff, transparent 60%),
+    radial-gradient(1.5px 1.5px at 44% 67%, #fff, transparent 60%),
+    radial-gradient(1px 1px at 88% 78%, #c9bfff, transparent 60%),
+    radial-gradient(1px 1px at 33% 88%, #fff, transparent 60%),
+    radial-gradient(1.5px 1.5px at 62% 38%, #b6f0ff, transparent 60%);
+  opacity: 0.7;
+  animation: drift 60s linear infinite;
+}
+@keyframes drift {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-40px); }
+}
+
+.stage {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 28px 16px 40px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.topbar { text-align: center; width: 100%; }
+
+.brand {
+  margin: 0;
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 28px rgba(154, 107, 255, 0.35);
+}
+
+.brand-glyph {
+  display: inline-block;
+  margin-right: 8px;
+  -webkit-text-fill-color: var(--neon-cyan);
+  color: var(--neon-cyan);
+  text-shadow: 0 0 12px var(--neon-cyan);
+  animation: pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.85; transform: translateY(0); }
+  50%      { opacity: 1; transform: translateY(-2px); }
+}
+
+.tagline {
+  margin: 6px 0 0;
+  color: var(--text-dim);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+}
+
+.game-frame {
+  position: relative;
+  padding: 10px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(94, 240, 255, 0.06), rgba(255, 94, 209, 0.06));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: var(--frame-glow);
+}
+
+.game-frame::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 16px;
+  padding: 1px;
+  background: linear-gradient(135deg, var(--neon-cyan), var(--neon-magenta), var(--neon-violet));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.game-canvas {
+  border-radius: 8px;
+  overflow: hidden;
+  background: #000;
+  line-height: 0;
+}
+.game-canvas canvas {
+  display: block;
+  border-radius: 8px;
+}
+
+.bottombar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--text-dim);
+  letter-spacing: 0.06em;
+}
+.bottombar .version { opacity: 0.7; }
+
+/* rexUI DOM input */
+input[type='text'] {
+  background: rgba(10, 14, 32, 0.85);
+  color: var(--text);
+  border: 1px solid rgba(94, 240, 255, 0.45);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  outline: none;
+  box-shadow: 0 0 10px rgba(94, 240, 255, 0.25) inset;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+input[type='text']:focus {
+  border-color: var(--neon-magenta);
+  box-shadow: 0 0 14px rgba(255, 94, 209, 0.45) inset,
+              0 0 12px rgba(255, 94, 209, 0.35);
+}
+input[type='text']::placeholder { color: var(--text-dim); opacity: 0.7; }
+
+@media (max-width: 540px) {
+  .stage { padding: 16px 8px 24px; }
+  .bottombar { flex-direction: column; align-items: center; text-align: center; }
 }
