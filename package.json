@@ -40,7 +40,7 @@
     "jest-expect-subclass": "^1.0.1",
     "jest-fetch-mock": "^3.0.3",
     "jquery": "^4.0.0",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^3.3.2",
     "popper.js": "^1.16.1",
     "sass": "^1.30.0",
     "serve": "^14.2.4",
